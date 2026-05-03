@@ -1,0 +1,21 @@
+{
+  "navigation": {
+    "home": "ہوم",
+    "timeline": "ٹائم لائن",
+    "learn": "سیکھیں",
+    "assistant": "مددگار",
+    "glossary": "لغت",
+    "checklist": "چیک لسٹ",
+    "resources": "وسائل",
+    "askAssistant": "مددگار سے پوچھیں"
+  },
+  "theme": {
+    "light": "روشنی",
+    "dark": "تاریک",
+    "system": "سسٹم"
+  },
+  "common": {
+    "loading": "لوڈ ہو رہا ہے...",
+    "error": "ایک خرابی پیش آ گئی"
+  }
+}

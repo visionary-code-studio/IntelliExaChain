@@ -1,0 +1,21 @@
+{
+  "navigation": {
+    "home": "হোম",
+    "timeline": "টাইমলাইন",
+    "learn": "শিখুন",
+    "assistant": "সহকারী",
+    "glossary": "শব্দকোষ",
+    "checklist": "চেকলিস্ট",
+    "resources": "সম্পদ",
+    "askAssistant": "সহকারীকে জিজ্ঞাসা করুন"
+  },
+  "theme": {
+    "light": "হালকা",
+    "dark": "অন্ধকার",
+    "system": "সিস্টেম"
+  },
+  "common": {
+    "loading": "লোড হচ্ছে...",
+    "error": "একটি ত্রুটি ঘটেছে"
+  }
+}

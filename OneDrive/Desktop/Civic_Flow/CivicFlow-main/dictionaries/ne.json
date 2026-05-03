@@ -1,0 +1,21 @@
+{
+  "navigation": {
+    "home": "गृहपृष्ठ",
+    "timeline": "समयरेखा",
+    "learn": "सिक्नुहोस्",
+    "assistant": "सहायक",
+    "glossary": "शब्दावली",
+    "checklist": "चेकलिस्ट",
+    "resources": "स्रोतहरू",
+    "askAssistant": "सहायकलाई सोध्नुहोस्"
+  },
+  "theme": {
+    "light": "उज्यालो",
+    "dark": "अध्यारो",
+    "system": "प्रणाली"
+  },
+  "common": {
+    "loading": "लोड हुँदैछ...",
+    "error": "त्रुटि भयो"
+  }
+}

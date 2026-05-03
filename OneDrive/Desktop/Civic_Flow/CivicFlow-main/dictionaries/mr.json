@@ -1,0 +1,21 @@
+{
+  "navigation": {
+    "home": "होम",
+    "timeline": "टाइमलाइन",
+    "learn": "शिका",
+    "assistant": "सहायक",
+    "glossary": "शब्दकोष",
+    "checklist": "चेकलिस्ट",
+    "resources": "संसाधने",
+    "askAssistant": "सहायकाला विचारा"
+  },
+  "theme": {
+    "light": "प्रकाश",
+    "dark": "अंधार",
+    "system": "सिस्टम"
+  },
+  "common": {
+    "loading": "लोड होत आहे...",
+    "error": "एक त्रुटी आली"
+  }
+}

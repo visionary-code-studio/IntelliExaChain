@@ -1,0 +1,21 @@
+{
+  "navigation": {
+    "home": "હોમ",
+    "timeline": "ટાઇમલાઇન",
+    "learn": "શીખો",
+    "assistant": "સહાયક",
+    "glossary": "શબ્દાવલિ",
+    "checklist": "ચેકલિસ્ટ",
+    "resources": "સંસાધનો",
+    "askAssistant": "સહાયકને પૂછો"
+  },
+  "theme": {
+    "light": "લાઇટ",
+    "dark": "ડાર્ક",
+    "system": "સિસ્ટમ"
+  },
+  "common": {
+    "loading": "લોડ થઈ રહ્યું છે...",
+    "error": "ભૂલ આવી"
+  }
+}

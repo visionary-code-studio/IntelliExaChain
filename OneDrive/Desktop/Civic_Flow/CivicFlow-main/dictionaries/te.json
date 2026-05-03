@@ -1,0 +1,21 @@
+{
+  "navigation": {
+    "home": "హోమ్",
+    "timeline": "కాలక్రమం",
+    "learn": "నేర్చుకోండి",
+    "assistant": "సహాయకుడు",
+    "glossary": "పదకోశం",
+    "checklist": "చెక్‌లిస్ట్",
+    "resources": "వనరులు",
+    "askAssistant": "సహాయకుడిని అడగండి"
+  },
+  "theme": {
+    "light": "లైట్",
+    "dark": "డార్క్",
+    "system": "సిస్టమ్"
+  },
+  "common": {
+    "loading": "లోడ్ అవుతోంది...",
+    "error": "ఒక లోపం ఏర్పడింది"
+  }
+}

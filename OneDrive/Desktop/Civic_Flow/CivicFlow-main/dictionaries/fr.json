@@ -1,0 +1,21 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "timeline": "Chronologie",
+    "learn": "Apprendre",
+    "assistant": "Assistant",
+    "glossary": "Glossaire",
+    "checklist": "Liste",
+    "resources": "Ressources",
+    "askAssistant": "Demander"
+  },
+  "theme": {
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue"
+  }
+}

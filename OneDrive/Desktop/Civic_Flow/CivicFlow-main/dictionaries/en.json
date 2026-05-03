@@ -1,0 +1,21 @@
+{
+  "navigation": {
+    "home": "Home",
+    "timeline": "Timeline",
+    "learn": "Learn",
+    "assistant": "Assistant",
+    "glossary": "Glossary",
+    "checklist": "Checklist",
+    "resources": "Resources",
+    "askAssistant": "Ask Assistant"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred"
+  }
+}
