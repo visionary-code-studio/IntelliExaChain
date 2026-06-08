@@ -411,6 +411,78 @@ K --> L[Blockchain Certificate]
 | CloudFront | CDN |
 
 ---
+## 🧑‍💻 Recommended Technical Stack
+
+### Frontend
+- **Next.js** or **React**
+- TypeScript
+- Tailwind CSS
+- shadcn/ui or Material UI
+- Zustand or Redux Toolkit for state
+- React Hook Form + Zod for forms
+- WebSocket/SSE for live proctoring events
+
+### Backend
+- **Node.js with NestJS** or Express
+- TypeScript
+- REST + WebSocket APIs
+- JWT / OAuth2 / SSO integration
+- RBAC / ABAC authorization
+
+### Blockchain
+- **Hyperledger Fabric** for institutional permissioned deployment  
+  or
+- **Private Ethereum / Quorum** for EVM compatibility and smart contract portability
+
+### Smart Contracts
+- Solidity for EVM-based networks
+- Chaincode for Hyperledger Fabric
+
+### Storage
+- PostgreSQL for relational data
+- Redis for caching and queues
+- S3-compatible object storage for encrypted files
+- Optional IPFS-like private content-addressed storage for immutable file references
+
+### AI / Proctoring
+- Python microservice
+- OpenCV
+- TensorFlow or PyTorch
+- MediaPipe for face/gaze landmarks
+- Audio anomaly pipeline
+- Event scoring service
+
+### DevOps
+- Docker
+- Kubernetes
+- GitHub Actions
+- Prometheus + Grafana
+- ELK / OpenSearch for logs
+- Secrets Manager / Vault
+
+### Security
+- TLS everywhere
+- Encryption at rest
+- Signed uploads
+- HSM / KMS for key management
+- Audit logging
+- Rate limiting
+- Anti-replay tokens
+
+---
+
+## Suggested Deployment Topology
+- 1 API gateway
+- 1 auth service
+- 1 exam service
+- 1 identity service
+- 1 evaluation service
+- 1 proctoring service
+- 1 blockchain network with multiple validating nodes
+- 1 object storage cluster
+- 1 PostgreSQL cluster
+- 1 Redis instance/cluster
+---
 
 # 🎨 UI/UX Design Philosophy
 
