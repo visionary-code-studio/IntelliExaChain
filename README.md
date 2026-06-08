@@ -497,7 +497,7 @@ K --> L[Blockchain Certificate]
 <tr>
 
 <td align="center">
-<img src=""C:\Users\user\OneDrive\Desktop\EARNING FOLDER\LINKEDIN PROFILE.png"" width="120px"><br>
+<img src="LINKEDIN PROFILE.png"" width="120px"><br>
 <b>Vaibhav Shaw</b><br>
 Team Leader & Product Strategist<br>
 Product Manager & AI Proficient
