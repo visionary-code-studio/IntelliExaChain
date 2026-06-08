@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | IntelliExaChain</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --navy: #0a0e1a;
+      --navy2: #0f1629;
+      --navy3: #151c35;
+      --card: #1a2240;
+      --card2: #1f2a4a;
+      --border: rgba(99, 125, 255, 0.15);
+      --border2: rgba(99, 125, 255, 0.25);
+      --purple: #6366f1;
+      --purple2: #8b5cf6;
+      --cyan: #06b6d4;
+      --teal: #14b8a6;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --text: #e8eaf6;
+      --text2: #94a3b8;
+      --text3: #64748b;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+    }
+
+    /* Video Background */
+    #bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+      z-index: -2;
+      transform: scale(1.1);
+    }
+
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(99, 102, 241, 0.1) 50%, rgba(6, 182, 212, 0.05) 100%);
+      z-index: -1;
+    }
+
+    /* Layout Wrapper */
+    .container {
+      width: 100%;
+      max-width: 900px;
+      z-index: 2;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #fff 0%, var(--cyan) 50%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    /* Back Button */
+    .back-btn {
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(10px);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* SECTIONS */
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card {
+      background: rgba(26, 34, 64, 0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    p {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: var(--text2);
+    }
+
+    /* TECHNOLOGY PILLARS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: rgba(26, 34, 64, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--cyan);
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .stat-desc {
+      font-size: 0.78rem;
+      color: var(--text2);
+      line-height: 1.5;
+    }
+
+    /* TEAM GRID */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .team-card {
+      background: rgba(26, 34, 64, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(8px);
+    }
+
+    .team-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      border-color: rgba(99,102,241,0.3);
+    }
+
+    .team-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--card2);
+      border: 2px solid var(--purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 15px;
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+    }
+
+    .team-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .team-role {
+      font-size: 0.72rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .team-desc {
+      font-size: 0.76rem;
+      color: var(--text2);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background visual -->
+  <video id="bg-video" autoplay loop muted playsinline>
+    <source src="Background_Visual.mp4" type="video/mp4">
+  </video>
+  <div class="bg-overlay"></div>
+
+  <div class="container">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo">
+        <div class="logo-icon">🔑</div>
+        <h1>IntelliExaChain</h1>
+      </div>
+      <a href="index.html" class="back-btn">← Back to Landing Page</a>
+    </div>
+
+    <!-- MISSION CARD -->
+    <div class="section-title">ℹ️ About IntelliExaChain</div>
+    <div class="card">
+      <div class="card-title">Our Mission</div>
+      <p>
+        Our mission is to establish absolute trust, unwavering integrity, and complete accessibility for global examinations. 
+        By combining state-of-the-art AI proctoring with immutable cryptographic ledgers, we ensure that every score is 
+        earned fairly and verified instantly. IntelliExaChain is engineered to modernize high-stakes testing, rendering paper leaks 
+        and administrative manipulation impossible.
+      </p>
+    </div>
+
+    <!-- TECHNOLOGY PILLARS -->
+    <div class="section-title">🛡️ Core Technology Pillars</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label" style="color:var(--purple)">🤖 Spectator AI</div>
+        <p class="stat-desc">
+          Client-side computer vision engine that monitors candidates via webcam. Tracks gaze vector deviations, secondary face intrusions, and anomalous ambient audio. Automatically logs incident hashes directly to the blockchain nodes.
+        </p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label" style="color:var(--cyan)">⛓️ ExaChain Ledger</div>
+        <p class="stat-desc">
+          A permissioned, high-frequency blockchain network hosted across academic and government nodes. Stores cryptographic hashes of exam questions, response state snapshots, and proctoring audit trails, preventing unauthorized database tampering.
+        </p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label" style="color:var(--teal)">💳 Decentralized DIDs</div>
+        <p class="stat-desc">
+          Self-sovereign identity using W3C-compliant Decentralized Identifiers. Protects candidate privacy by keeping biometrics (FaceID/VoiceID templates) encrypted on-device while generating zero-knowledge proofs for exam-day verification.
+        </p>
+      </div>
+    </div>
+
+    <!-- MEET THE TEAM -->
+    <div class="section-title">👨‍💻 Team Visionary Coders</div>
+    <div class="team-grid">
+      <div class="team-card">
+        <img class="team-avatar" src="LINKEDIN PROFILE.png" alt="Vaibhav Shaw" style="object-fit:cover; display:block">
+        <div class="team-name">Vaibhav Shaw</div>
+        <div class="team-role">Team Leader &amp; PM<br>Product Strategist &amp; AI Proficient</div>
+        <p class="team-desc">Spearheads project roadmap, AI feature alignment, and cryptographic trust strategy. Drives platform architecture integration.</p>
+      </div>
+      <div class="team-card">
+        <img class="team-avatar" src="ishant_profile.png" alt="Ishant Joshi" style="object-fit:cover; display:block">
+        <div class="team-name">Ishant Joshi</div>
+        <div class="team-role">Frontend Developer<br>AI Proficient</div>
+        <p class="team-desc">Develops the premium glassmorphic UI, responsive views, page navigation transitions, and real-time proctoring overlays.</p>
+      </div>
+      <div class="team-card">
+        <img class="team-avatar" src="aftab_profile.png" alt="Md. Aftab Uddin" style="object-fit:cover; display:block">
+        <div class="team-name">Md. Aftab Uddin</div>
+        <div class="team-role">Backend Developer<br>Design UI/UX</div>
+        <p class="team-desc">Architects the local data store mock, evaluates grading models, and crafts layout style tokens for optimal visual ergonomics.</p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

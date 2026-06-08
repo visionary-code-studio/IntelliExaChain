@@ -288,3 +288,26 @@ Mitigation: autosave checkpoints, local secure cache, replay-safe syncing.
 - Automatic subjective answer generation
 - Multi-language handwritten answer recognition
 - Native mobile apps
+
+---
+## 14) Core and USP OF THE INTELLIEXACHAIN:
+*Spectator*
+ - It has Intelligence known as "Spectator" which uses AI to detect cheating
+ - It has a secure blockchain know as "ExaChain" which uses AI to detect cheating
+ - It monitor Webcam of every Candidate/Student and give realtime results to the Proct with every action of Candidate 
+ - It also has a feature of face recognition to prevent impersonation
+ - It also has a feature of FaceID and VoiceID to prevent impersonation
+ - Send Information regarding Cheating and any type of impersonation and  fraud and dishonesty in examination to the Proct, Institute, show in candidate registration form, proctor panel, institute dashboard, examiner panel and also in the Examination Authority Dashboard and show realtime data in the AI Proctor's Dashboard.
+ - Track the examination hall, location  using camera and GPS of the candidate
+ - It track candidates perfromance during exam and give detailed analysis to the examiner and also show realtime data in the AI Proctor's Dashboard.
+*Spectator Bot*
+ - AI ChatBOT of IntelliExaChain which give realtime annoucement and notification about ongoing examination.
+ - It helps Candidate to get relevent information about the examination.
+   like how to register , how to download hall ticket, how to download result, how to appear for exam,rules and guidelines of examination, how this Intelliexachain prevent unfairness, how this IntelliExachain work, how this IntelliExachain ensure security, how this IntelliExachain ensure transparency, how this IntelliExachain ensure accountability, how this IntelliExachain ensure privacy, how this IntelliExachain ensure fairness, how this IntelliExachain ensure reliability, how this IntelliExachain ensure,etc.
+ - What are the consequences of cheating and any type of impersonation and fraud and dishonesty in examination? 
+ - How to Apply for Examination using different websites of Examination conducting authorities like JEE MAINS & ADVANCED BY NTA, UNIVERSITIES EXAMINATION (SUBJECTIVE OR OBJECTIVE), UPSC,etc.?
+
+ *Overview*
+ Intelliexachain is a revolutionary platform that redefines the examination process by integrating advanced AI and blockchain technologies. It ensures complete security, transparency, and fairness, eliminating cheating and impersonation while providing real-time monitoring and detailed analytics to all stakeholders.
+ Integrating different websites of different authorities of different examinations , where candidate have to appear for examination in that authority's website with the help of intelliexachain technology and AI Proctor and blockchain security system, etc.  and with the approval of that Examination Authority. [In authority website candidate will register , book exam slot , get application number and form, admit card but in IntelliExaChain students appeared for examination and candidates real-time data will be track using Intelligence (AI),ExaChain (Blockchain),Proctor(AI), Spectator(AI). Question Paper will be encrypted with help of Blockchain and will be decrypted at the time of examination and no-one can download it before that and distribute.]
+
