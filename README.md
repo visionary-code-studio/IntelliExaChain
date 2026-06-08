@@ -499,21 +499,21 @@ K --> L[Blockchain Certificate]
 <td align="center">
 <img src="docs/assets/vaibhav.png" width="120px"><br>
 <b>Vaibhav Shaw</b><br>
-Team Leader & Product Strategist
+Team Leader & Product Strategist<br>
 Product Manager & AI Proficient
 </td>
 
 <td align="center">
 <img src="docs/assets/debasish.png" width="120px"><br>
 <b>Ishant Joshi</b><br>
-Frontend Developer
+Frontend Developer<br>
 AI Proficient
 </td>
 
 <td align="center">
 <img src="docs/assets/sabujdip.png" width="120px"><br>
 <b>Md. Aftab Uddin</b><br>
-Backend Developer
+Backend Developer<br>
 Presentation 
 </td>
 
