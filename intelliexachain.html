@@ -3621,15 +3621,410 @@
       box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
       transform: translateY(-2px);
     }
-    .sidebar-logo {
-      cursor: pointer;
-      transition: background 0.2s;
-    }
     .sidebar-logo:hover {
       background: rgba(255, 255, 255, 0.02);
     }
+
+    /* VERIFICATION PORTAL CUSTOM STYLES */
+    .verify-portal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .verify-portal-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .verify-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .verify-card.active-success {
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+    }
+    .verify-card.active-flagged {
+      border-color: rgba(239, 68, 68, 0.4);
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+    }
+    .verify-card.active-warning {
+      border-color: rgba(245, 158, 11, 0.4);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+    }
+    .verify-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .verify-desc {
+      font-size: 0.82rem;
+      color: var(--text2);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    .verify-input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .verify-textbox {
+      flex: 1;
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .verify-textbox:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 8px rgba(6, 182, 212, 0.25);
+    }
+    .quick-pills-label {
+      font-size: 0.75rem;
+      color: var(--text3);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .quick-pills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .quick-did-pill {
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quick-did-pill:hover {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: var(--purple);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+    .qr-scan-section {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-qr-scan {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--purple2) 100%);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+    }
+    .btn-qr-scan:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+      filter: brightness(1.1);
+    }
+    
+    /* Result Display Styles */
+    .verify-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--text3);
+    }
+    .verify-placeholder-icon {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      opacity: 0.4;
+      animation: pulseCheck 3s infinite ease-in-out;
+    }
+    
+    .report-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+    .report-status-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .badge-success {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .badge-flagged {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+    .badge-warning {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+    
+    .verify-profile-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+    .verify-avatar {
+      width: 50px;
+      height: 50px;
+      background: var(--card2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      border: 2px solid var(--border);
+    }
+    .verify-candidate-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .verify-candidate-did {
+      font-size: 0.75rem;
+      color: var(--text3);
+      font-family: var(--mono);
+      word-break: break-all;
+    }
+    
+    .verify-details-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+    }
+    .verify-details-table tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .verify-details-table tr:last-child {
+      border-bottom: none;
+    }
+    .verify-details-table td {
+      padding: 10px 0;
+    }
+    .verify-details-table td.label {
+      color: var(--text2);
+      width: 40%;
+    }
+    .verify-details-table td.val {
+      font-weight: 500;
+      color: var(--text);
+      text-align: right;
+    }
+    
+    .verify-integrity-checklist {
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .verify-checklist-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 5px;
+    }
+    .checklist-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+    .checklist-item:last-child {
+      margin-bottom: 0;
+    }
+    .checklist-label {
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .checklist-status {
+      font-weight: bold;
+    }
+    
+    /* Cryptographic verification simulation styles */
+    .crypto-verify-action-box {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .crypto-steps-log {
+      background: rgba(0,0,0,0.3);
+      border-radius: 6px;
+      padding: 10px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      text-align: left;
+      margin-bottom: 12px;
+      max-height: 120px;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: none;
+    }
+    .crypto-log-line {
+      margin-bottom: 4px;
+      color: var(--text3);
+      line-height: 1.3;
+    }
+    .crypto-log-line.success {
+      color: var(--green);
+    }
+    .crypto-log-line.loading {
+      color: var(--cyan);
+    }
+    .crypto-log-line.warning {
+      color: var(--amber);
+    }
+    
+    /* QR Scanner Overlay Modal */
+    .qr-modal {
+      display: none;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 14, 26, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    .qr-scanner-card {
+      width: 380px;
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    .qr-scanner-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .qr-scanner-viewport {
+      width: 100%;
+      height: 250px;
+      background: #000;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-target-box {
+      width: 160px;
+      height: 160px;
+      border: 2px dashed rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-target-corner {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-color: var(--cyan);
+      border-style: solid;
+    }
+    .c-tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; }
+    .c-tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; }
+    .c-bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; }
+    .c-br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; }
+    
+    .qr-laser-line {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+      animation: scanLaser 2s infinite ease-in-out;
+      pointer-events: none;
+    }
+    
+    @keyframes scanLaser {
+      0% { top: 15%; }
+      50% { top: 85%; }
+      100% { top: 15%; }
+    }
+    @keyframes pulseCheck {
+      0% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.08); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 0.4; }
+    }
   </style>
 </head>
+
 
 <body>
 
@@ -3712,6 +4107,9 @@
         <div class="nav-item" onclick="showPage('identity')">
           <span class="nav-icon">🛡️</span> Identity
         </div>
+        <div class="nav-item" onclick="showPage('verification')">
+          <span class="nav-icon">🔍</span> Verify Credentials
+        </div>
         <div class="nav-item" onclick="showPage('analytics')">
           <span class="nav-icon">📈</span> Analytics
         </div>
@@ -3737,6 +4135,7 @@
             <option value="proctor">Proctor</option>
             <option value="examiner">Examiner</option>
             <option value="auditor">Auditor</option>
+            <option value="recruiter">Recruiter / Verifier</option>
           </select>
         </div>
         <div class="topbar-spacer"></div>
@@ -5599,6 +5998,159 @@
         </div>
       </div>
 
+      <!-- THIRD-PARTY CREDENTIAL VERIFICATION PORTAL -->
+      <div id="page-verification" class="page">
+        <div class="section-header">
+          <div class="section-title">🔍 Third-Party Credential Verification Portal</div>
+        </div>
+        
+        <div class="verify-portal-grid">
+          <!-- Left Input Card -->
+          <div class="verify-card">
+            <h3 class="verify-title">🛡️ Verify Candidate Credentials</h3>
+            <p class="verify-desc">
+              Recruiters and academic authorities can search for a candidate's Decentralized ID (DID) or ExaChain block transaction hash to instantly verify their academic record and exam integrity.
+            </p>
+            
+            <div class="quick-pills-label">Quick Verify Candidates</div>
+            <div class="quick-pills-container">
+              <div class="quick-did-pill" onclick="selectQuickVerify('did:indy:0x7f4c10a12e32a688')">
+                👤 Riya Singh (JEE)
+              </div>
+              <div class="quick-did-pill" onclick="selectQuickVerify('did:indy:0xa4f28e88e312a105')">
+                👤 Ankit Sharma (Flagged)
+              </div>
+              <div class="quick-did-pill" onclick="selectQuickVerify('did:indy:0xc1a3f031e882a991')">
+                👤 Priya Patel (Review)
+              </div>
+            </div>
+            
+            <div class="verify-input-group">
+              <input type="text" class="verify-textbox" id="verify-search-input" placeholder="Enter DID or Transaction Hash (e.g. did:indy:0x...)" onkeypress="handleVerifyKeyPress(event)">
+              <button class="btn-primary" style="padding:10px 18px" onclick="verifyInputCredential()">Verify</button>
+            </div>
+            
+            <div class="qr-scan-section">
+              <span style="font-size:0.78rem;color:var(--text3)">OR SCAN CANDIDATE PASS</span>
+              <button class="btn-qr-scan" onclick="startQrScan()">
+                📷 Scan Candidate QR Code
+              </button>
+            </div>
+          </div>
+          
+          <!-- Right Verification Status Card -->
+          <div class="verify-card" id="verify-result-card" style="min-height:450px">
+            <!-- Standby Placeholder -->
+            <div class="verify-placeholder" id="verify-placeholder">
+              <div class="verify-placeholder-icon">🛡️</div>
+              <h3 style="color:var(--text);font-size:1.1rem;margin-bottom:8px">Awaiting Search or QR Scan</h3>
+              <p style="font-size:0.8rem;max-width:320px;line-height:1.4">
+                Please scan a candidate's digital admit ticket QR code or input their DID signature above to query the ExaChain blockchain ledger.
+              </p>
+            </div>
+            
+            <!-- Result Content (Initially Hidden) -->
+            <div id="verify-result-content" style="display:none">
+              <div class="report-header">
+                <span style="font-size:0.85rem;color:var(--text3)">EXACHAIN LEDGER RECORD</span>
+                <span class="report-status-badge badge-success" id="verify-status-badge">
+                  ✓ Verified
+                </span>
+              </div>
+              
+              <div class="verify-profile-row">
+                <div class="verify-avatar" id="verify-avatar-icon">👤</div>
+                <div>
+                  <div class="verify-candidate-name" id="verify-cand-name">Riya Singh</div>
+                  <div class="verify-candidate-did" id="verify-cand-did">did:indy:0x7f4c10a12e32a688</div>
+                </div>
+              </div>
+              
+              <table class="verify-details-table">
+                <tr>
+                  <td class="label">Exam Taken</td>
+                  <td class="val" id="verify-exam-title">JEE Main Mock Test</td>
+                </tr>
+                <tr>
+                  <td class="label">Official Score</td>
+                  <td class="val" id="verify-exam-score">98.6% (324/360)</td>
+                </tr>
+                <tr>
+                  <td class="label">Exam Date</td>
+                  <td class="val">June 8, 2026</td>
+                </tr>
+                <tr>
+                  <td class="label">Issuing Authority</td>
+                  <td class="val" id="verify-authority">National Testing Agency (NTA)</td>
+                </tr>
+                <tr>
+                  <td class="label">Cryptographic Status</td>
+                  <td class="val" style="color:var(--green)">Immutably Anchored</td>
+                </tr>
+              </table>
+              
+              <div class="verify-integrity-checklist">
+                <div class="verify-checklist-title">Integrity Verification Audit</div>
+                
+                <div class="checklist-item">
+                  <span class="checklist-label">🔑 Decentralized Identifier (DID)</span>
+                  <span class="checklist-status" style="color:var(--green)" id="check-did-status">✓ Authenticated</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="checklist-label">👤 Biometric FaceID Record</span>
+                  <span class="checklist-status" style="color:var(--green)" id="check-face-status">✓ Matches Registrant</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="checklist-label">🎙️ Biometric VoiceID Match</span>
+                  <span class="checklist-status" style="color:var(--green)" id="check-voice-status">✓ Matches Registrant</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="checklist-label">🤖 Spectator AI Cheating Audit</span>
+                  <span class="checklist-status" style="color:var(--green)" id="check-anomaly-status">✓ 0 Flagged Anomalies</span>
+                </div>
+              </div>
+              
+              <!-- Cryptographic Hash Verification Interactive -->
+              <div class="crypto-verify-action-box">
+                <div class="crypto-steps-log" id="crypto-steps-log">
+                  <!-- Steps injected here -->
+                </div>
+                <button class="btn-outline" id="btn-crypto-verify" style="width:100%" onclick="runCryptographicVerification()">
+                  ⛓️ Verify Cryptographic Block Hash
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- QR CODE SCANNER MODAL -->
+  <div class="qr-modal" id="qr-scanner-modal">
+    <div class="qr-scanner-card">
+      <div class="qr-scanner-header">
+        <div style="font-weight:bold;color:var(--text);font-size:0.95rem">📷 ExaChain QR Code Scanner</div>
+        <button class="btn-outline" style="padding:4px 8px;font-size:0.7rem;cursor:pointer" onclick="closeQrScan()">✕ Close</button>
+      </div>
+      <p style="font-size:0.75rem;color:var(--text2);margin-bottom:15px">
+        Align the candidate's digital pass QR code inside the target window.
+      </p>
+      <div class="qr-scanner-viewport">
+        <div class="qr-target-box">
+          <div class="qr-target-corner c-tl"></div>
+          <div class="qr-target-corner c-tr"></div>
+          <div class="qr-target-corner c-bl"></div>
+          <div class="qr-target-corner c-br"></div>
+          
+          <div style="font-size:0.75rem;color:rgba(255,255,255,0.4);font-family:var(--mono)">[ SEARCHING PASS ]</div>
+        </div>
+        <div class="qr-laser-line"></div>
+      </div>
+      <div style="font-size:0.78rem;color:var(--cyan);margin-top:15px;font-family:var(--mono)" id="qr-scanner-status">
+        ● Accessing Secure Camera API...
+      </div>
     </div>
   </div>
 
@@ -5753,12 +6305,244 @@
 
     function switchRole(role) {
       const topbar = document.querySelector('.topbar-avatar');
-      const avatars = { admin: 'AS', student: 'RS', proctor: 'PK', examiner: 'EM', auditor: 'CA' };
+      const avatars = { admin: 'AS', student: 'RS', proctor: 'PK', examiner: 'EM', auditor: 'CA', recruiter: 'RV' };
       if (topbar) topbar.textContent = avatars[role] || 'AS';
       if (role === 'student') showPage('examroom');
       else if (role === 'proctor') showPage('proctoring');
       else if (role === 'auditor') showPage('audit');
+      else if (role === 'recruiter') showPage('verification');
       else showPage('dashboard');
+    }
+
+    // --- THIRD-PARTY CREDENTIAL VERIFICATION SYSTEM ---
+    
+    // Track selected candidate's name for block verification
+    let activeVerifyCandidate = null;
+
+    function handleVerifyKeyPress(e) {
+      if (e.key === 'Enter') {
+        verifyInputCredential();
+      }
+    }
+
+    function selectQuickVerify(did) {
+      document.getElementById('verify-search-input').value = did;
+      verifyCredential(did);
+    }
+
+    function verifyInputCredential() {
+      const val = document.getElementById('verify-search-input').value.trim();
+      if (!val) {
+        alert("Please enter a Candidate DID, Name, or ExaChain Transaction Hash to verify.");
+        return;
+      }
+      verifyCredential(val);
+    }
+
+    function verifyCredential(query) {
+      let candidateKey = null;
+      const q = query.toLowerCase();
+
+      // Look up candidate in database by DID, name, or sub-string of DID
+      for (const name in candidatesDb) {
+        const c = candidatesDb[name];
+        if (c.name.toLowerCase() === q || c.did.toLowerCase() === q || c.did.toLowerCase().includes(q) || q.includes(c.regId.toLowerCase())) {
+          candidateKey = name;
+          break;
+        }
+      }
+
+      // Default fallback for demo hash checks: if they search something random, resolve to Riya Singh
+      if (!candidateKey && (q.startsWith('0x') || q.length > 15)) {
+        // Find if they typed some mock hash - default to Riya
+        candidateKey = 'Riya Singh';
+      }
+
+      const placeholder = document.getElementById('verify-placeholder');
+      const content = document.getElementById('verify-result-content');
+      const card = document.getElementById('verify-result-card');
+
+      if (!candidateKey) {
+        alert("❌ Hash ID or Decentralized ID not found on ExaChain ledger.\nPlease try one of our Quick Verify candidate pills.");
+        placeholder.style.display = 'flex';
+        content.style.display = 'none';
+        card.className = "verify-card";
+        return;
+      }
+
+      const p = candidatesDb[candidateKey];
+      activeVerifyCandidate = candidateKey;
+
+      // Update UI fields
+      document.getElementById('verify-cand-name').textContent = p.name;
+      document.getElementById('verify-cand-did').textContent = p.did;
+      document.getElementById('verify-authority').textContent = p.authority;
+
+      // Update avatar
+      const avatarText = p.name === 'Riya Singh' ? '👩‍🎓' : p.name === 'Ankit Sharma' ? '👨‍🎓' : '👩‍💻';
+      document.getElementById('verify-avatar-icon').textContent = avatarText;
+
+      // Reset block check logs
+      const logBox = document.getElementById('crypto-steps-log');
+      logBox.style.display = 'none';
+      logBox.innerHTML = '';
+      document.getElementById('btn-crypto-verify').style.display = 'block';
+
+      // Update Exam & Scores dynamically
+      let scoreText = '';
+      let examTitle = '';
+      if (p.name === 'Riya Singh') {
+        examTitle = 'JEE Main Mock Test';
+        scoreText = '98.6% (324/360)';
+      } else if (p.name === 'Ankit Sharma') {
+        examTitle = 'JEE Main Mock Test';
+        scoreText = '74.2% (231/360)';
+      } else {
+        examTitle = 'GATE CS Mock Test';
+        scoreText = '89.5% (79.5/100)';
+      }
+      document.getElementById('verify-exam-title').textContent = examTitle;
+      document.getElementById('verify-exam-score').textContent = scoreText;
+
+      // Handle status badges & card border colors
+      const badge = document.getElementById('verify-status-badge');
+      const didStatus = document.getElementById('check-did-status');
+      const faceStatus = document.getElementById('check-face-status');
+      const voiceStatus = document.getElementById('check-voice-status');
+      const anomalyStatus = document.getElementById('check-anomaly-status');
+
+      if (p.status.includes('Active') && !p.status.includes('Reviewing')) {
+        badge.className = "report-status-badge badge-success";
+        badge.textContent = "✓ Verified";
+        card.className = "verify-card active-success";
+
+        didStatus.textContent = "✓ Authenticated";
+        didStatus.style.color = "var(--green)";
+        faceStatus.textContent = "✓ Matches Registrant";
+        faceStatus.style.color = "var(--green)";
+        voiceStatus.textContent = "✓ Matches Registrant";
+        voiceStatus.style.color = "var(--green)";
+        anomalyStatus.textContent = "✓ 0 Flagged Anomalies";
+        anomalyStatus.style.color = "var(--green)";
+      } else if (p.status.includes('Flagged')) {
+        badge.className = "report-status-badge badge-flagged";
+        badge.textContent = "⚠️ Flagged";
+        card.className = "verify-card active-flagged";
+
+        didStatus.textContent = "✓ Authenticated";
+        didStatus.style.color = "var(--green)";
+        faceStatus.textContent = "⚠️ Impersonation Warning";
+        faceStatus.style.color = "var(--red)";
+        voiceStatus.textContent = "✓ Matches Registrant";
+        voiceStatus.style.color = "var(--green)";
+        anomalyStatus.textContent = "❌ Multiple Face Detected";
+        anomalyStatus.style.color = "var(--red)";
+      } else { // Reviewing state
+        badge.className = "report-status-badge badge-warning";
+        badge.textContent = "🔍 Under Review";
+        card.className = "verify-card active-warning";
+
+        didStatus.textContent = "✓ Authenticated";
+        didStatus.style.color = "var(--green)";
+        faceStatus.textContent = "✓ Matches Registrant";
+        faceStatus.style.color = "var(--green)";
+        voiceStatus.textContent = "✓ Matches Registrant";
+        voiceStatus.style.color = "var(--green)";
+        anomalyStatus.textContent = "⚠️ Gaze Deviation Flag";
+        anomalyStatus.style.color = "var(--amber)";
+      }
+
+      // Show result card
+      placeholder.style.display = 'none';
+      content.style.display = 'block';
+    }
+
+    // QR SCANNER SIMULATOR
+    let qrScanTimeout = null;
+
+    function startQrScan() {
+      const modal = document.getElementById('qr-scanner-modal');
+      const statusText = document.getElementById('qr-scanner-status');
+      
+      modal.style.display = 'flex';
+      statusText.textContent = "● Initializing secure webcam feed...";
+      statusText.style.color = "var(--cyan)";
+
+      // Simulate QR scan sequence
+      qrScanTimeout = setTimeout(() => {
+        statusText.textContent = "● QR Code detected! Reading bytes...";
+        statusText.style.color = "var(--amber)";
+        
+        qrScanTimeout = setTimeout(() => {
+          statusText.textContent = "✓ Decrypted hash: did:indy:0x7f4c10a12e32a688";
+          statusText.style.color = "var(--green)";
+          
+          qrScanTimeout = setTimeout(() => {
+            closeQrScan();
+            // Automatically select and verify Riya Singh
+            selectQuickVerify('did:indy:0x7f4c10a12e32a688');
+          }, 600);
+
+        }, 800);
+
+      }, 1000);
+    }
+
+    // CLOSE QR MODAL
+    function closeQrScan() {
+      if (qrScanTimeout) clearTimeout(qrScanTimeout);
+      document.getElementById('qr-scanner-modal').style.display = 'none';
+    }
+
+    // CRYPTOGRAPHIC BLOCK HASH VALIDATION ANIMATION
+    function runCryptographicVerification() {
+      const logBox = document.getElementById('crypto-steps-log');
+      const verifyBtn = document.getElementById('btn-crypto-verify');
+      const p = candidatesDb[activeVerifyCandidate];
+      if (!p) return;
+
+      verifyBtn.style.display = 'none';
+      logBox.style.display = 'block';
+      logBox.innerHTML = '';
+
+      const steps = [
+        { text: "⚡ Fetching block header for Block #1,847,295...", time: 500, style: 'loading' },
+        { text: `🔑 Retrieving Candidate Decentralized ID: ${p.did.substring(0, 20)}...`, time: 1000, style: '' },
+        { text: `⛓️ Pulling merkle root commit hash from ExaChain ledger...`, time: 1500, style: '' },
+        { text: `⚙️ Calculating local hash: SHA256(did + grade_percentile + proctor_audit_log)`, time: 2000, style: 'loading' },
+        { text: `📝 Local Hash calculated: 0x5a2f8b${p.name === 'Ankit Sharma' ? '311d' : '9d6e'}4e21a8f59...`, time: 2600, style: '' },
+        { text: `🔁 Comparing with ledger state...`, time: 3100, style: 'loading' }
+      ];
+
+      steps.forEach(step => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = `crypto-log-line ${step.style}`;
+          div.textContent = step.text;
+          logBox.appendChild(div);
+          logBox.scrollTop = logBox.scrollHeight;
+        }, step.time);
+      });
+
+      // Final verification success outcome
+      setTimeout(() => {
+        const div = document.createElement('div');
+        div.className = "crypto-log-line success";
+        div.style.fontWeight = 'bold';
+        
+        if (p.name === 'Ankit Sharma') {
+          div.textContent = "⚠️ INTEGRITY FAILED: Block hash matches ledger but flags are active. Proctor audit log indicates multiple face anomalies.";
+          div.className = "crypto-log-line warning";
+        } else if (p.name === 'Priya Patel') {
+          div.textContent = "🔍 PENDING VALIDATION: Block hash verified. Pending final auditor confirmation of sustained gaze anomaly.";
+          div.className = "crypto-log-line warning";
+        } else {
+          div.textContent = "✓ CRYPTOGRAPHIC VERIFICATION MATCH: SHA256 hash match successful. Candidate data has NOT been modified since on-chain lock.";
+        }
+        
+        logBox.appendChild(div);
+        logBox.scrollTop = logBox.scrollHeight;
+      }, 3700);
     }
 
     // --- DYNAMIC MULTI-EXAM DATABASE ---
