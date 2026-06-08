@@ -500,25 +500,23 @@ K --> L[Blockchain Certificate]
 <img src="docs/assets/vaibhav.png" width="120px"><br>
 <b>Vaibhav Shaw</b><br>
 Team Leader & Product Strategist
+Product Manager & AI Proficient
 </td>
 
 <td align="center">
 <img src="docs/assets/debasish.png" width="120px"><br>
-<b>Debasish Dey</b><br>
-Core Developer
+<b>Ishant Joshi</b><br>
+Frontend Developer
+AI Proficient
 </td>
 
 <td align="center">
 <img src="docs/assets/sabujdip.png" width="120px"><br>
-<b>Sabujdip Sahoo</b><br>
+<b>Md. Aftab Uddin</b><br>
 Backend Developer
+Presentation 
 </td>
 
-<td align="center">
-<img src="docs/assets/samprit.png" width="120px"><br>
-<b>Samprit Koley</b><br>
-AI & Blockchain Engineer
-</td>
 
 </tr>
 </table>
