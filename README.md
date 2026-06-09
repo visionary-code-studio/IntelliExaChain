@@ -7,7 +7,7 @@
 ### AI-Powered • Blockchain-Backed • Next-Generation Examination Infrastructure
 
 <p align="center">
-  <img src="docs/assets/banner.png" alt="IntelliExaChain Banner" width="100%">
+  <img src="BANNER.png" alt="IntelliExaChain Banner" width="100%">
 </p>
 
 ![Version](https://img.shields.io/badge/version-1.0-blue?style=for-the-badge)
