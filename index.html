@@ -3419,6 +3419,42 @@
       background: rgba(6, 182, 212, 0.1);
       border-color: var(--cyan);
     }
+    .bot-dropdown {
+      width: 100%;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--cyan);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2306b6d4' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 14px;
+      padding-right: 36px;
+    }
+    .bot-dropdown:hover {
+      border-color: var(--cyan);
+      background-color: var(--card2);
+    }
+    .bot-dropdown:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.15);
+    }
+    .bot-dropdown option {
+      background: var(--navy2);
+      color: var(--text);
+    }
+    .bot-dropdown option:disabled {
+      color: var(--text3);
+    }
     .bot-input-area {
       border-top: 1px solid var(--border);
       padding: 12px 16px;
@@ -6552,11 +6588,14 @@
     </div>
 
     <div class="bot-chips" id="bot-chips">
-      <div class="bot-chip" onclick="handleChipClick('ExaChain & Spectator AI')">How does security work?</div>
-      <div class="bot-chip" onclick="handleChipClick('Consequences of cheating')">What if I cheat?</div>
-      <div class="bot-chip" onclick="handleChipClick('Apply for exams')">How to apply for exams?</div>
-      <div class="bot-chip" onclick="handleChipClick('DID, FaceID & VoiceID')">What is FaceID &amp; VoiceID?</div>
-      <div class="bot-chip" onclick="handleChipClick('How to register')">How to register?</div>
+      <select class="bot-dropdown" onchange="handleDropdownSelect(this)">
+        <option value="" disabled selected hidden>Quick Replies / Common Questions...</option>
+        <option value="ExaChain & Spectator AI">How does security work?</option>
+        <option value="Consequences of cheating">What if I cheat?</option>
+        <option value="Apply for exams">How to apply for exams?</option>
+        <option value="DID, FaceID & VoiceID">What is FaceID &amp; VoiceID?</option>
+        <option value="How to register">How to register?</option>
+      </select>
     </div>
 
     <div class="bot-input-area">
@@ -8192,6 +8231,13 @@
     function handleChipClick(topic) {
       appendChatMessage(topic, 'user');
       simulateBotReply(topic);
+    }
+
+    function handleDropdownSelect(selectEl) {
+      const val = selectEl.value;
+      if (!val) return;
+      handleChipClick(val);
+      selectEl.value = ""; // Reset dropdown to placeholder
     }
 
     function sendBotMessage() {

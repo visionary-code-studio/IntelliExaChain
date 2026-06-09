@@ -1627,6 +1627,13 @@
       simulateBotReply(topic);
     }
 
+    function handleDropdownSelect(selectEl) {
+      const val = selectEl.value;
+      if (!val) return;
+      handleChipClick(val);
+      selectEl.value = ""; // Reset dropdown to placeholder
+    }
+
     function sendBotMessage() {
       const input = document.getElementById('bot-input');
       const text = input.value.trim();
