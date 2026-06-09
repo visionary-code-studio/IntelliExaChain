@@ -9,14 +9,13 @@
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
-      /* ── Deep-dark charcoal theme (EdTech + Blockchain) ── */
-      --navy:    #0c0c11;
-      --navy2:   #111118;
-      --navy3:   #17171f;
-      --card:    #1e1e28;
-      --card2:   #25253a;
-      --border:  rgba(255, 255, 255, 0.07);
-      --border2: rgba(255, 255, 255, 0.13);
+      --navy:    #111111;
+      --navy2:   #141414;
+      --navy3:   #191919;
+      --card:    #1d1d1d;
+      --card2:   #232323;
+      --border:  rgba(255, 255, 255, 0.05);
+      --border2: rgba(255, 255, 255, 0.09);
       --purple:  #6366f1;
       --purple2: #8b5cf6;
       --cyan:    #06b6d4;
@@ -24,9 +23,9 @@
       --green:   #10b981;
       --amber:   #f59e0b;
       --red:     #ef4444;
-      --text:    #f0f0f8;
-      --text2:   #8a8aa8;
-      --text3:   #52527a;
+      --text:    #f8f8f8;
+      --text2:   #888888;
+      --text3:   #555555;
       --mono: 'JetBrains Mono', monospace;
     }
 
@@ -264,6 +263,28 @@
       font-size: 0.7rem;
       color: var(--text3);
     }
+    .icon-inline {
+      width: 1.1em;
+      height: 1.1em;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .icon-large {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      display: inline-block;
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
@@ -278,20 +299,31 @@
     <!-- HEADER -->
     <div class="header">
       <div class="logo">
-        <div class="logo-icon">🔑</div>
+        <div class="logo-icon"><svg class="icon-large" style="color:white" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg></div>
         <h1>IntelliExaChain</h1>
       </div>
-      <a href="index.html" class="back-btn">← Back to Landing Page</a>
+      <a href="#" onclick="goBack(event)" class="back-btn">← Back to Landing Page</a>
     </div>
 
+    <script>
+      function goBack(e) {
+        if (e) e.preventDefault();
+        if (document.referrer && document.referrer.includes('intelliexachain.html')) {
+          window.location.href = 'intelliexachain.html';
+        } else {
+          window.location.href = 'index.html';
+        }
+      }
+    </script>
+
     <!-- PLATFORM BLOG -->
-    <div class="section-title">📰 Platform Blog</div>
+    <div class="section-title"><svg class="icon-inline" style="color:var(--cyan);margin-right:8px" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path><path d="M6 6h12M6 10h12M6 14h8M6 18h5"></path></svg>Platform Blog</div>
     <div class="blog-article">
       <div class="blog-title">The Cryptographic Guardian: Why AI and Blockchain are the Future of Testing</div>
       <div class="blog-meta">
-        <span>📅 June 8, 2026</span>
-        <span>✍️ Rohan Mehta</span>
-        <span>📂 Technology &amp; Security</span>
+        <span><svg class="icon-inline" style="margin-right:4px;color:var(--cyan)" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>June 8, 2026</span>
+        <span><svg class="icon-inline" style="margin-right:4px;color:var(--cyan)" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Rohan Mehta</span>
+        <span><svg class="icon-inline" style="margin-right:4px;color:var(--cyan)" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>Technology &amp; Security</span>
       </div>
       <div class="blog-body">
         <p>
@@ -310,14 +342,14 @@
     </div>
 
     <!-- USER TESTIMONIALS -->
-    <div class="section-title">💬 User Epic Stories</div>
+    <div class="section-title"><svg class="icon-inline" style="color:var(--cyan);margin-right:8px" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>User Epic Stories</div>
     <div class="testimonial-card-grid">
       <div class="testimonial-epic-card">
         <div class="testimonial-epic-text">
           I was incredibly anxious about sitting for my national competitive entrance exam online from a remote center. However, the IntelliExaChain interface made the entire security check seamless. The FaceID setup took seconds, and the 10-second Zero-Knowledge decryption handshake before the exam started felt like a modern security shield. I could focus entirely on my test, knowing my answers were hashed on-chain.
         </div>
         <div class="testimonial-epic-author">
-          <div class="testimonial-epic-avatar">🎓</div>
+          <div class="testimonial-epic-avatar"><svg class="icon-large" style="color:var(--cyan)" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg></div>
           <div>
             <div class="testimonial-epic-name">Riya Singh</div>
             <div class="testimonial-epic-meta">JEE Candidate · Rank #42</div>
@@ -330,7 +362,7 @@
           Logistical safety has always been our biggest vulnerability. Paper leak cartels and impersonators operate with sophisticated tools. Transitioning our board mock exams to IntelliExaChain eliminated these leaks entirely. The Spectator AI proctoring dashboard gave our coordinators real-time alerts. When a candidate was flagged for having a second face in the webcam border, the information was immediately synced across all dashboards.
         </div>
         <div class="testimonial-epic-author">
-          <div class="testimonial-epic-avatar">🏫</div>
+          <div class="testimonial-epic-avatar"><svg class="icon-large" style="color:var(--purple)" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="16"></line><line x1="15" y1="22" x2="15" y2="16"></line><line x1="9" y1="16" x2="15" y2="16"></line><path d="M8 6h2v2H8V6zm4 0h2v2h-2V6zm4 0h2v2h-2V6zM8 10h2v2H8v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z"></path></svg></div>
           <div>
             <div class="testimonial-epic-name">N. K. Sharma</div>
             <div class="testimonial-epic-meta">Principal, Delhi Academy</div>
@@ -343,7 +375,7 @@
           Before IntelliExaChain, verification of exam results for university admission took weeks of manual data checks, constantly prone to bribe-based manipulation. Now, our grading records are immutably written to ExaChain blockchain blocks. Certificate verification takes less than a second using verified hashes. This platform provides the exact system of accountability and reliability the education sector has been waiting for.
         </div>
         <div class="testimonial-epic-author">
-          <div class="testimonial-epic-avatar">🏛️</div>
+          <div class="testimonial-epic-avatar"><svg class="icon-large" style="color:var(--teal)" viewBox="0 0 24 24"><line x1="2" y1="22" x2="22" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line><path d="M4 6h16l-8-4-8 4zM4 10h16v11H4V10zm3 0v11m5-11v11m5-11v11"></path></svg></div>
           <div>
             <div class="testimonial-epic-name">Dr. Rajesh Gowda</div>
             <div class="testimonial-epic-meta">Director, National Testing Agency</div>

@@ -10,15 +10,23 @@
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
-      /* ── Deep-dark charcoal theme (EdTech + Blockchain) ── */
-      --navy:    #0c0c11;   /* near-black app background          */
-      --navy2:   #111118;   /* sidebar / panel shell              */
-      --navy3:   #17171f;   /* inner section / sub-panel          */
-      --card:    #1e1e28;   /* card surface                       */
-      --card2:   #25253a;   /* elevated / hover card surface      */
-      --border:  rgba(255, 255, 255, 0.07);   /* neutral-white subtle border  */
-      --border2: rgba(255, 255, 255, 0.13);   /* slightly more visible border */
-      /* ── Brand accent colours (unchanged) ── */
+      /* ══════════════════════════════════════════════════════════════
+         EXACT Reference UI Palette — Pure Neutral Obsidian Dark
+         Extracted from reference dashboard image
+         ══════════════════════════════════════════════════════════════ */
+
+      /* Backgrounds — pure neutral grays, ZERO color tint */
+      --navy:    #111111;   /* outer app shell / page background      */
+      --navy2:   #141414;   /* sidebar & primary panel shell          */
+      --navy3:   #191919;   /* inner sub-panels / section dividers    */
+      --card:    #1d1d1d;   /* card surface                           */
+      --card2:   #232323;   /* elevated card / hover / selected state  */
+
+      /* Borders — barely-there separation (reference uses almost invisible lines) */
+      --border:  rgba(255, 255, 255, 0.05);
+      --border2: rgba(255, 255, 255, 0.09);
+
+      /* ── Brand accent colours — unchanged ── */
       --purple:  #6366f1;
       --purple2: #8b5cf6;
       --cyan:    #06b6d4;
@@ -26,10 +34,12 @@
       --green:   #10b981;
       --amber:   #f59e0b;
       --red:     #ef4444;
-      /* ── Typography ── */
-      --text:    #f0f0f8;   /* clean near-white (brighter than before)  */
-      --text2:   #8a8aa8;   /* neutral muted text                       */
-      --text3:   #52527a;   /* dimmed / label text                      */
+
+      /* Typography — exactly matching reference's text hierarchy */
+      --text:    #f8f8f8;   /* near-pure white — same as reference heading text  */
+      --text2:   #888888;   /* neutral mid-gray — reference body/muted text      */
+      --text3:   #555555;   /* dimmed — reference label / timestamp text         */
+
       --mono: 'JetBrains Mono', monospace;
     }
 
@@ -237,108 +247,287 @@
     #app {
       display: none;
       min-height: 100vh;
+      position: relative;
+      z-index: 10;
     }
 
-    /* SIDEBAR */
+    /* Glow blobs for liquid glassmorphism depth */
+    .glass-glow-blob {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.16;
+      pointer-events: none;
+      z-index: 0;
+      animation: float-glow 25s ease-in-out infinite alternate;
+    }
+    
+    .blob-1 {
+      top: -120px;
+      left: -120px;
+      background: radial-gradient(circle, var(--purple) 0%, rgba(99, 102, 241, 0) 70%);
+    }
+    
+    .blob-2 {
+      bottom: -150px;
+      left: -50px;
+      background: radial-gradient(circle, var(--cyan) 0%, rgba(6, 182, 212, 0) 70%);
+      animation-delay: -12s;
+    }
+
+    @keyframes float-glow {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(60px, 40px) scale(1.15);
+      }
+    }
+
+    /* ══════════════════════════════════════════════
+       SIDEBAR — Sliding collapsible (reference UI)
+       Expanded: 224px  |  Collapsed: 68px
+       ══════════════════════════════════════════════ */
     .sidebar {
       position: fixed;
       left: 0;
       top: 0;
       bottom: 0;
-      width: 220px;
-      background: var(--navy2);
-      border-right: 1px solid var(--border);
+      width: 224px;
+      /* Premium Liquid Glassmorphism background & filters - More transparent */
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(255, 255, 255, 0.01) 40%,
+        rgba(0, 0, 0, 0.15) 100%
+      ), rgba(17, 17, 17, 0.12);
+      backdrop-filter: blur(28px) saturate(210%);
+      -webkit-backdrop-filter: blur(28px) saturate(210%);
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 
+        inset -1px 0 0 rgba(255, 255, 255, 0.02),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.03),
+        8px 0 32px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       z-index: 100;
+      transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
     }
 
-    .sidebar-logo {
-      padding: 20px 18px 16px;
-      border-bottom: 1px solid var(--border);
+    /* ── Collapsed state ── */
+    .sidebar.collapsed {
+      width: 68px;
     }
+
+    /* Logo header */
+    .sidebar-logo {
+      padding: 18px 14px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 66px;
+      cursor: pointer;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .sidebar-logo:hover { background: rgba(255, 255, 255, 0.03); }
 
     .sidebar-logo-row {
       display: flex;
       align-items: center;
       gap: 10px;
+      width: 100%;
+      overflow: hidden;
     }
 
     .logo-icon {
-      width: 34px;
-      height: 34px;
-      background: linear-gradient(135deg, var(--purple), var(--cyan));
-      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 9px;
+      object-fit: contain;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
-      font-weight: 700;
-      color: white;
+    }
+
+    .logo-text-wrap {
+      overflow: hidden;
+      white-space: nowrap;
+      transition: opacity 0.2s, width 0.28s cubic-bezier(0.4,0,0.2,1);
+      width: 160px;
+    }
+    .sidebar.collapsed .logo-text-wrap {
+      opacity: 0;
+      width: 0;
+      pointer-events: none;
     }
 
     .logo-text {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--text);
+      white-space: nowrap;
     }
 
     .logo-sub {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       color: var(--text3);
-      margin-top: 2px;
+      margin-top: 1px;
+      white-space: nowrap;
     }
 
+    /* Nav area */
     .sidebar-nav {
       flex: 1;
-      padding: 12px 10px;
+      padding: 10px 8px;
       overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
     }
+    .sidebar-nav::-webkit-scrollbar { display: none; }
 
+    /* Section labels — hidden when collapsed */
     .nav-section-label {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 600;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--text3);
-      padding: 8px 8px 4px;
+      padding: 10px 10px 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      transition: opacity 0.2s, height 0.25s;
+      height: 28px;
+    }
+    .sidebar.collapsed .nav-section-label {
+      opacity: 0;
+      height: 0;
+      padding: 0;
+      pointer-events: none;
     }
 
+    /* Divider line shown in collapsed mode where labels were */
+    .nav-section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 6px 10px;
+      transition: opacity 0.2s;
+      opacity: 0;
+    }
+    .sidebar.collapsed .nav-section-divider {
+      opacity: 1;
+    }
+
+    /* Nav items */
     .nav-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 8px;
+      gap: 12px;
+      padding: 9px 11px;
+      border-radius: 9px;
       font-size: 0.84rem;
       font-weight: 500;
       color: var(--text2);
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background 0.15s, color 0.15s;
       margin-bottom: 2px;
       border: 1px solid transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
     }
 
     .nav-item:hover {
-      background: var(--card);
+      background: rgba(255, 255, 255, 0.05);
       color: var(--text);
+      border-color: rgba(255, 255, 255, 0.07);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
     }
 
     .nav-item.active {
-      background: rgba(99, 102, 241, 0.15);
-      color: var(--purple);
-      border-color: rgba(99, 102, 241, 0.2);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .nav-item.active .nav-icon {
+      color: var(--cyan);
+      filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.4));
     }
 
     .nav-icon {
-      font-size: 16px;
-      width: 18px;
-      text-align: center;
+      min-width: 20px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
+    .nav-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.15s;
+    }
+
+    /* Nav label — fades out when collapsed */
+    .nav-label {
+      transition: opacity 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .sidebar.collapsed .nav-label {
+      opacity: 0;
+      width: 0;
+      pointer-events: none;
+    }
+
+    /* Tooltip on hover when collapsed */
+    .sidebar.collapsed .nav-item {
+      justify-content: center;
+      padding: 9px 0;
+    }
+    .sidebar.collapsed .nav-item::after {
+      content: attr(data-label);
+      position: absolute;
+      left: calc(100% + 12px);
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--card2);
+      color: var(--text);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 7px;
+      border: 1px solid var(--border2);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+      z-index: 200;
+    }
+    .sidebar.collapsed .nav-item:hover::after {
+      opacity: 1;
+    }
+
+    /* Footer */
     .sidebar-footer {
-      padding: 14px 12px;
-      border-top: 1px solid var(--border);
+      padding: 10px 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
     }
 
     .blockchain-badge {
@@ -347,50 +536,89 @@
       border-radius: 8px;
       padding: 8px 10px;
       text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: padding 0.28s;
     }
-
+    .sidebar.collapsed .blockchain-badge {
+      padding: 8px 4px;
+      background: transparent;
+      border-color: transparent;
+    }
     .blockchain-badge .bb-label {
       font-size: 0.6rem;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: var(--text3);
+      transition: opacity 0.2s;
     }
-
+    .sidebar.collapsed .bb-label,
+    .sidebar.collapsed .bb-status-text {
+      display: none;
+    }
     .blockchain-badge .bb-status {
       font-size: 0.78rem;
       font-weight: 600;
       color: var(--cyan);
       margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
     }
-
     .blockchain-badge .bb-dot {
       display: inline-block;
-      width: 6px;
-      height: 6px;
+      min-width: 8px;
+      width: 8px;
+      height: 8px;
       background: var(--green);
       border-radius: 50%;
-      margin-right: 5px;
       animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    /* Sidebar toggle button */
+    .sidebar-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 8px auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      cursor: pointer;
+      color: var(--text2);
+      font-size: 14px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.28s cubic-bezier(0.4,0,0.2,1);
+      flex-shrink: 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+    .sidebar-toggle:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: var(--text);
+    }
+    .sidebar.collapsed .sidebar-toggle {
+      transform: rotate(180deg);
     }
 
     @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 1
-      }
-
-      50% {
-        opacity: 0.4
-      }
+      0%, 100% { opacity: 1 }
+      50%       { opacity: 0.4 }
     }
 
-    /* MAIN CONTENT */
+    /* MAIN CONTENT — tracks sidebar width */
     .main {
-      margin-left: 220px;
+      margin-left: 224px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .main.sidebar-collapsed {
+      margin-left: 68px;
     }
 
     /* TOPBAR */
@@ -3507,34 +3735,42 @@
 
     /* CHATBOT ANNOUNCEMENTS */
     .bot-announcements-container {
-      background: rgba(99,125,255,0.08);
+      background: rgba(99, 125, 255, 0.06);
       border-bottom: 1px solid var(--border);
-      padding: 8px 12px;
+      padding: 10px 14px;
       font-size: 0.72rem;
       display: flex;
+      flex-direction: column;
       gap: 6px;
-      align-items: center;
+      align-items: flex-start;
       overflow: hidden;
       position: relative;
     }
     .bot-announcement-tag {
-      background: var(--primary);
-      color: white;
-      padding: 2px 6px;
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--cyan);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      padding: 2px 8px;
       border-radius: 4px;
       font-size: 0.65rem;
       font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       flex-shrink: 0;
     }
     .bot-announcement-ticker {
       display: flex;
       white-space: nowrap;
       animation: ticker-scroll 25s infinite linear;
-      width: 100%;
+      width: max-content;
+      flex-shrink: 0;
     }
     .bot-announcement-msg {
-      margin-right: 40px;
+      margin-right: 50px;
       color: var(--text2);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
     @keyframes ticker-scroll {
       0% { transform: translateX(100%); }
@@ -4026,6 +4262,31 @@
       50% { transform: scale(1.08); opacity: 0.7; }
       100% { transform: scale(1); opacity: 0.4; }
     }
+
+    /* Vector SVG Utility Classes */
+    .icon-inline {
+      width: 1.1em;
+      height: 1.1em;
+      vertical-align: -0.15em;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .icon-large {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      display: block;
+    }
   </style>
 </head>
 
@@ -4050,81 +4311,106 @@
       </div>
       <button class="splash-enter-btn" onclick="clickEnter()">Enter Platform →</button>
       <div class="splash-badges">
-        <span class="splash-badge badge-blockchain">⛓ Blockchain Secured</span>
-        <span class="splash-badge badge-ai">🤖 AI Proctoring</span>
-        <span class="splash-badge badge-edtech">📚 EdTech Platform</span>
+        <span class="splash-badge badge-blockchain"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>Blockchain Secured</span>
+        <span class="splash-badge badge-ai"><svg class="icon-inline" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4M8 16h8M16 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2M8 8H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2"></path></svg>AI Proctoring</span>
+        <span class="splash-badge badge-edtech"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>EdTech Platform</span>
       </div>
       <div class="splash-links">
-        <button class="splash-link-btn" onclick="clickLandingLink('about')">ℹ️ About Us</button>
-        <button class="splash-link-btn" onclick="clickLandingLink('testimonials')">💬 Testimonials &amp; Blog</button>
+        <button class="splash-link-btn" onclick="clickLandingLink('about')"><svg class="icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>About Us</button>
+        <button class="splash-link-btn" onclick="clickLandingLink('testimonials')"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Testimonials &amp; Blog</button>
       </div>
     </div>
   </div>
 
+  <!-- Liquid Glassmorphism Background Glow Blobs -->
+  <div class="glass-glow-blob blob-1"></div>
+  <div class="glass-glow-blob blob-2"></div>
+
   <!-- MAIN APP -->
   <div id="app">
     <!-- SIDEBAR -->
-    <div class="sidebar">
+    <div class="sidebar" id="main-sidebar">
+
+      <!-- Logo / brand -->
       <div class="sidebar-logo" onclick="showSplash()">
         <div class="sidebar-logo-row">
           <img class="logo-icon" src="logo.png" alt="IEC Logo" style="background:none">
-          <div>
+          <div class="logo-text-wrap">
             <div class="logo-text">IntelliExaChain</div>
             <div class="logo-sub">Trust Every Exam</div>
           </div>
         </div>
       </div>
 
+      <!-- Navigation -->
       <nav class="sidebar-nav">
+
+        <!-- Main -->
         <div class="nav-section-label">Main</div>
-        <div class="nav-item active" onclick="showPage('dashboard')">
-          <span class="nav-icon">🏠</span> Dashboard
+        <div class="nav-item active" data-label="Dashboard" onclick="showPage('dashboard')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span><span class="nav-label">Dashboard</span>
         </div>
-        <div class="nav-item" onclick="showPage('exams')">
-          <span class="nav-icon">📋</span> Exams
+        <div class="nav-item" data-label="Exams" onclick="showPage('exams')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M9 12h6M9 16h6"></path></svg></span><span class="nav-label">Exams</span>
         </div>
-        <div class="nav-item" onclick="showPage('candidates')">
-          <span class="nav-icon">👥</span> Candidates
+        <div class="nav-item" data-label="Candidates" onclick="showPage('candidates')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span><span class="nav-label">Candidates</span>
         </div>
-        <div class="nav-item" onclick="showPage('vault')">
-          <span class="nav-icon">🔐</span> Question Vault
-        </div>
-
-        <div class="nav-section-label" style="margin-top:8px">Monitoring</div>
-        <div class="nav-item" onclick="showPage('proctoring')">
-          <span class="nav-icon">🎥</span> AI Proctoring
-        </div>
-        <div class="nav-item" onclick="showPage('examroom')">
-          <span class="nav-icon">✏️</span> Exam Room
-        </div>
-        <div class="nav-item" onclick="showPage('results')">
-          <span class="nav-icon">📊</span> Results
+        <div class="nav-item" data-label="Question Vault" onclick="showPage('vault')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path><circle cx="12" cy="16" r="1.5"></circle></svg></span><span class="nav-label">Question Vault</span>
         </div>
 
-        <div class="nav-section-label" style="margin-top:8px">Trust</div>
-        <div class="nav-item" onclick="showPage('audit')">
-          <span class="nav-icon">📜</span> Audit Trail
+        <!-- Monitoring -->
+        <div class="nav-section-divider"></div>
+        <div class="nav-section-label">Monitoring</div>
+        <div class="nav-item" data-label="AI Proctoring" onclick="showPage('proctoring')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect><circle cx="8" cy="12" r="2"></circle></svg></span><span class="nav-label">AI Proctoring</span>
         </div>
-        <div class="nav-item" onclick="showPage('certificates')">
-          <span class="nav-icon">🏆</span> Certificates
+        <div class="nav-item" data-label="Exam Room" onclick="showPage('examroom')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></span><span class="nav-label">Exam Room</span>
         </div>
-        <div class="nav-item" onclick="showPage('identity')">
-          <span class="nav-icon">🛡️</span> Identity
+        <div class="nav-item" data-label="Results" onclick="showPage('results')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span><span class="nav-label">Results</span>
         </div>
-        <div class="nav-item" onclick="showPage('verification')">
-          <span class="nav-icon">🔍</span> Verify Credentials
+
+        <!-- Trust -->
+        <div class="nav-section-divider"></div>
+        <div class="nav-section-label">Trust &amp; Verify</div>
+        <div class="nav-item" data-label="Audit Trail" onclick="showPage('audit')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></span><span class="nav-label">Audit Trail</span>
         </div>
-        <div class="nav-item" onclick="showPage('analytics')">
-          <span class="nav-icon">📈</span> Analytics
+        <div class="nav-item" data-label="Certificates" onclick="showPage('certificates')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg></span><span class="nav-label">Certificates</span>
         </div>
+        <div class="nav-item" data-label="Identity" onclick="showPage('identity')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg></span><span class="nav-label">Identity</span>
+        </div>
+        <div class="nav-item" data-label="Verify Credentials" onclick="showPage('verification')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span><span class="nav-label">Verify Credentials</span>
+        </div>
+        <div class="nav-item" data-label="Analytics" onclick="showPage('analytics')">
+          <span class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span><span class="nav-label">Analytics</span>
+        </div>
+
       </nav>
 
+      <!-- Footer -->
       <div class="sidebar-footer">
+        <!-- Blockchain status -->
         <div class="blockchain-badge">
           <div class="bb-label">Blockchain Status</div>
-          <div class="bb-status"><span class="bb-dot"></span>Healthy</div>
+          <div class="bb-status">
+            <span class="bb-dot"></span>
+            <span class="bb-status-text">Healthy</span>
+          </div>
+        </div>
+
+        <!-- Collapse / expand toggle -->
+        <div class="sidebar-toggle" id="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle sidebar">
+          &#8249;
         </div>
       </div>
+
     </div>
 
     <!-- MAIN CONTENT -->
@@ -4144,11 +4430,11 @@
         </div>
         <div class="topbar-spacer"></div>
         <div style="display:flex;align-items:center;gap:12px;margin-right:15px">
-          <span id="exam-decrypted-status" style="font-size:0.75rem;padding:4px 10px;background:rgba(239,68,68,0.1);color:var(--red);border-radius:4px;border:1px solid rgba(239,68,68,0.2)">
-            🔒 Ledger Encrypted
+          <span id="exam-decrypted-status" style="font-size:0.75rem;padding:4px 10px;background:rgba(239,68,68,0.1);color:var(--red);border-radius:4px;border:1px solid rgba(239,68,68,0.2);display:inline-flex;align-items:center">
+            <svg class="icon-inline" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Ledger Encrypted
           </span>
-          <button class="btn-outline" id="lock-ledger-btn" style="padding:4px 8px;font-size:0.7rem;display:none;border-color:var(--red);color:var(--red)" onclick="lockExamLedger()">
-            🔒 Lock Ledger
+          <button class="btn-outline" id="lock-ledger-btn" style="padding:4px 8px;font-size:0.7rem;display:none;border-color:var(--red);color:var(--red);align-items:center" onclick="lockExamLedger()">
+            <svg class="icon-inline" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Lock Ledger
           </button>
         </div>
         <div class="topbar-chain-status">
@@ -4161,26 +4447,26 @@
       <div id="page-dashboard" class="page active">
         <!-- HERO -->
         <div class="hero">
-          <div class="hero-tag">🚀 The Future Infrastructure of Global Examinations</div>
+          <div class="hero-tag"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:4px"><path d="M4.5 16.5c-1.5 1.5-2.5 3.5-2.5 5.5C4 22 6 21 7.5 19.5M22 2l-10 10M16 2l-6 6M22 8l-6-6M9 15l-3-3M20 4l-4 4"></path><path d="M12 12c-2.5 2.5-6.5 1.5-8.5-.5s-3-6-.5-8.5S9.5 2.5 12 12z"></path></svg>The Future Infrastructure of Global Examinations</div>
           <h1>Secure. Fair. <span>Intelligent.</span></h1>
           <p class="hero-desc">Conduct any exam — School, University, Competitive, Recruitment or Certification — with
             AI intelligence and Blockchain trust. Zero unauthorized access. Complete audit trail.</p>
           <div class="hero-btns">
             <button class="btn-primary" onclick="showPage('exams')">Start an Exam</button>
-            <button class="btn-outline" onclick="showPage('examroom')">▶ Watch How It Works</button>
+            <button class="btn-outline" style="display:inline-flex;align-items:center" onclick="showPage('examroom')"><svg class="icon-inline" viewBox="0 0 24 24" style="stroke-width:2.5px;margin-right:6px"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>Watch How It Works</button>
           </div>
           <div class="hero-trust">
             <div class="trust-item">
-              <div class="trust-icon" style="background:rgba(16,185,129,0.1)">🔒</div> Secure by Design
+              <div class="trust-icon" style="background:rgba(16,185,129,0.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div> Secure by Design
             </div>
             <div class="trust-item">
-              <div class="trust-icon" style="background:rgba(6,182,212,0.1)">⚖️</div> Fair by Process
+              <div class="trust-icon" style="background:rgba(6,182,212,0.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="5" y1="7" x2="19" y2="7"></line><path d="M5 7L2 14h6L5 7zM19 7l-3 7h6l-3-7z"></path></svg></div> Fair by Process
             </div>
             <div class="trust-item">
-              <div class="trust-icon" style="background:rgba(139,92,246,0.1)">🤖</div> Smart by AI
+              <div class="trust-icon" style="background:rgba(139,92,246,0.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4M8 16h8M16 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2M8 8H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2"></path></svg></div> Smart by AI
             </div>
             <div class="trust-item">
-              <div class="trust-icon" style="background:rgba(245,158,11,0.1)">🌍</div> Scalable for Millions
+              <div class="trust-icon" style="background:rgba(245,158,11,0.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div> Scalable for Millions
             </div>
           </div>
         </div>
@@ -4188,22 +4474,22 @@
         <!-- STATS -->
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-label">📋 Active Exams</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M9 12h6M9 16h6"></path></svg>Active Exams</div>
             <div class="stat-val">12</div>
             <div class="stat-change up">▲ 2 from yesterday</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">👥 Candidates Online</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Candidates Online</div>
             <div class="stat-val">18,542</div>
             <div class="stat-change live">● Live right now</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">🤖 AI Alerts</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4M8 16h8M16 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2M8 8H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2"></path></svg>AI Alerts</div>
             <div class="stat-val">23</div>
-            <div class="stat-change warn">⚠ Needs Review</div>
+            <div class="stat-change warn"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:4px;width:1.0em;height:1.0em"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Needs Review</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">⛓ Blockchain Status</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>Blockchain Status</div>
             <div class="stat-val" style="font-size:1.2rem;color:var(--green)">Healthy</div>
             <div class="stat-change live" style="color:var(--green)">● All systems secure</div>
           </div>
@@ -4262,7 +4548,7 @@
             </div>
             <div class="card-body">
               <div class="exam-item">
-                <div class="exam-icon" style="background:rgba(99,102,241,0.1)">📝</div>
+                <div class="exam-icon" style="background:rgba(99,102,241,0.1);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;display:block"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
                 <div class="exam-info">
                   <div class="exam-name">JEE Main Mock Test</div>
                   <div class="exam-meta">25 May 2026 · 09:00 AM</div>
@@ -4271,7 +4557,7 @@
                 <div class="exam-count">24,532</div>
               </div>
               <div class="exam-item">
-                <div class="exam-icon" style="background:rgba(6,182,212,0.1)">🏫</div>
+                <div class="exam-icon" style="background:rgba(6,182,212,0.1);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;display:block"><path d="M22 22H2M18 22V10l-6-6-6 6v12M12 14v8M10 8h4"></path></svg></div>
                 <div class="exam-info">
                   <div class="exam-name">Class 12 Board Exam</div>
                   <div class="exam-meta">27 May 2026 · 10:00 AM</div>
@@ -4280,7 +4566,7 @@
                 <div class="exam-count">3,245</div>
               </div>
               <div class="exam-item">
-                <div class="exam-icon" style="background:rgba(20,184,166,0.1)">🎓</div>
+                <div class="exam-icon" style="background:rgba(20,184,166,0.1);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;display:block"><path d="M22 10v6M2 10l10-5 10 5-10 5zM6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg></div>
                 <div class="exam-info">
                   <div class="exam-name">B.Tech Sem 4 Exam</div>
                   <div class="exam-meta">29 May 2026 · 02:00 PM</div>
@@ -4289,7 +4575,7 @@
                 <div class="exam-count">1,789</div>
               </div>
               <div class="exam-item">
-                <div class="exam-icon" style="background:rgba(245,158,11,0.1)">💼</div>
+                <div class="exam-icon" style="background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;display:block"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></div>
                 <div class="exam-info">
                   <div class="exam-name">SSC CGL Tier 1</div>
                   <div class="exam-meta">01 Jun 2026 · 09:00 AM</div>
@@ -4345,8 +4631,13 @@
             <div class="card-body">
               <div class="live-map">
                 <div
-                  style="width:100%;height:100%;background:rgba(99,102,241,0.03);display:flex;align-items:center;justify-content:center;font-size:2rem;opacity:0.4">
-                  🗺️</div>
+                  style="width:100%;height:100%;background:rgba(99,102,241,0.02);display:flex;align-items:center;justify-content:center;opacity:0.65">
+                  <svg viewBox="0 0 100 50" style="width:80%;height:80%;stroke:var(--purple);stroke-width:0.6;fill:none;stroke-dasharray:1 2">
+                    <path d="M10,15 C25,5 35,25 50,15 C65,5 75,25 90,15"></path>
+                    <path d="M5,25 C20,15 30,35 45,25 C60,15 70,35 85,25"></path>
+                    <path d="M15,35 C30,25 40,45 55,35 C70,25 80,45 95,35"></path>
+                  </svg>
+                </div>
                 <div class="live-map-dots">
                   <div class="map-dot" style="top:30%;left:40%"></div>
                   <div class="map-dot" style="top:50%;left:55%;animation-delay:0.5s"></div>
@@ -4395,10 +4686,8 @@
                 </div>
               </div>
               <div class="proc-indicators">
-                <div class="proc-ind"><span class="proc-ind-label"><span class="proc-dot ok"></span> Focus</span><span
-                    style="font-size:0.7rem;color:var(--green)">✓</span></div>
-                <div class="proc-ind"><span class="proc-ind-label"><span class="proc-dot ok"></span> Gaze</span><span
-                    style="font-size:0.7rem;color:var(--green)">✓</span></div>
+                <div class="proc-ind"><span class="proc-ind-label"><span class="proc-dot ok"></span> Focus</span><span style="font-size:0.7rem;color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="width:0.85em;height:0.85em;margin-right:0"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
+                <div class="proc-ind"><span class="proc-ind-label"><span class="proc-dot ok"></span> Gaze</span><span style="font-size:0.7rem;color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="width:0.85em;height:0.85em;margin-right:0"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
                 <div class="proc-ind"><span class="proc-ind-label"><span class="proc-dot warn"></span> Audio</span><span
                     style="font-size:0.7rem;color:var(--amber)">~</span></div>
                 <div class="proc-ind"><span class="proc-ind-label"><span class="proc-dot ok"></span> Environ</span><span
@@ -4511,7 +4800,7 @@
                 <div class="cert-name">Riya Singh</div>
                 <div class="cert-exam">JEE Main Mock Test</div>
                 <div class="cert-score">98.6%</div>
-                <button class="verify-btn">🛡 Verify Now</button>
+                <button class="verify-btn" style="display:inline-flex;align-items:center;justify-content:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:4px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg>Verify Now</button>
               </div>
             </div>
           </div>
@@ -4525,42 +4814,42 @@
             <div class="card-body">
               <div class="exam-type-grid">
                 <div class="exam-type-card">
-                  <div class="et-icon" style="background:rgba(99,102,241,0.1)">🏫</div>
+                  <div class="et-icon" style="background:rgba(99,102,241,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" viewBox="0 0 24 24" style="stroke:var(--purple)"><path d="M22 22H2M18 22V10l-6-6-6 6v12M12 14v8M10 8h4"></path></svg></div>
                   <div>
                     <div class="et-title">School Exams</div>
                     <div class="et-desc">CBSE, ICSE, State Boards</div>
                   </div>
                 </div>
                 <div class="exam-type-card">
-                  <div class="et-icon" style="background:rgba(6,182,212,0.1)">🎓</div>
+                  <div class="et-icon" style="background:rgba(6,182,212,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" viewBox="0 0 24 24" style="stroke:var(--cyan)"><path d="M22 10v6M2 10l10-5 10 5-10 5zM6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg></div>
                   <div>
                     <div class="et-title">University Exams</div>
                     <div class="et-desc">UG, PG &amp; PhD Exams</div>
                   </div>
                 </div>
                 <div class="exam-type-card">
-                  <div class="et-icon" style="background:rgba(245,158,11,0.1)">🏆</div>
+                  <div class="et-icon" style="background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" viewBox="0 0 24 24" style="stroke:var(--amber)"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg></div>
                   <div>
                     <div class="et-title">Competitive Exams</div>
                     <div class="et-desc">JEE, NEET, UPSC, GATE</div>
                   </div>
                 </div>
                 <div class="exam-type-card">
-                  <div class="et-icon" style="background:rgba(16,185,129,0.1)">💼</div>
+                  <div class="et-icon" style="background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" viewBox="0 0 24 24" style="stroke:var(--green)"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></div>
                   <div>
                     <div class="et-title">Recruitment Exams</div>
                     <div class="et-desc">SSC, Bank, Railways</div>
                   </div>
                 </div>
                 <div class="exam-type-card">
-                  <div class="et-icon" style="background:rgba(139,92,246,0.1)">🛡️</div>
+                  <div class="et-icon" style="background:rgba(139,92,246,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" viewBox="0 0 24 24" style="stroke:var(--purple2)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
                   <div>
                     <div class="et-title">Certification Exams</div>
                     <div class="et-desc">NPTEL, Professional Certs</div>
                   </div>
                 </div>
                 <div class="exam-type-card">
-                  <div class="et-icon" style="background:rgba(239,68,68,0.1)">🏢</div>
+                  <div class="et-icon" style="background:rgba(239,68,68,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" viewBox="0 0 24 24" style="stroke:var(--red)"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="16"></line><line x1="15" y1="22" x2="15" y2="16"></line><line x1="9" y1="16" x2="15" y2="16"></line><path d="M8 6h2M8 10h2M14 6h2M14 10h2"></path></svg></div>
                   <div>
                     <div class="et-title">Corporate Assessments</div>
                     <div class="et-desc">Hiring &amp; Skill Tests</div>
@@ -4573,29 +4862,28 @@
             <div class="card-header"><span class="card-title">Why Institutions Love IntelliExaChain</span></div>
             <div class="card-body">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-                  <div style="font-size:16px;margin-bottom:6px">🔄</div>
+                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-start">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;margin-bottom:6px"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
                   <div style="font-size:0.78rem;font-weight:600;color:var(--text)">End-to-end Exam Lifecycle</div>
                 </div>
-                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-                  <div style="font-size:16px;margin-bottom:6px">🤖</div>
-                  <div style="font-size:0.78rem;font-weight:600;color:var(--text)">AI for Fair &amp; Intelligent Exams
-                  </div>
+                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-start">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;margin-bottom:6px"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4M8 16h8M16 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2M8 8H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2"></path></svg>
+                  <div style="font-size:0.78rem;font-weight:600;color:var(--text)">AI for Fair &amp; Intelligent Exams</div>
                 </div>
-                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-                  <div style="font-size:16px;margin-bottom:6px">⛓</div>
+                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-start">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;margin-bottom:6px"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                   <div style="font-size:0.78rem;font-weight:600;color:var(--text)">Blockchain for Transparency</div>
                 </div>
-                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-                  <div style="font-size:16px;margin-bottom:6px">📈</div>
+                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-start">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;margin-bottom:6px"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                   <div style="font-size:0.78rem;font-weight:600;color:var(--text)">Scalable to 10M+ Users</div>
                 </div>
-                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-                  <div style="font-size:16px;margin-bottom:6px">🔗</div>
+                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-start">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--purple2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;margin-bottom:6px"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                   <div style="font-size:0.78rem;font-weight:600;color:var(--text)">Easy ERP/LMS Integration</div>
                 </div>
-                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-                  <div style="font-size:16px;margin-bottom:6px">🛟</div>
+                <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-start">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;margin-bottom:6px"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="19.07" y1="4.93" x2="14.83" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="9.17" y1="14.83" x2="4.93" y2="19.07"></line></svg>
                   <div style="font-size:0.78rem;font-weight:600;color:var(--text)">24×7 Support, 99.9% Uptime</div>
                 </div>
               </div>
@@ -4635,7 +4923,7 @@
         <!-- EXAM SELECTION SCREEN -->
         <div class="exam-select-screen" id="exam-select-screen" style="padding:24px">
           <div class="section-header">
-            <div class="section-title">🔒 Secure Blockchain Exam Portal</div>
+            <div class="section-title" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Secure Blockchain Exam Portal</div>
             <div class="secure-badge">● Sandbox Active</div>
           </div>
           <p style="font-size:0.9rem;color:var(--text2);margin-bottom:20px;max-width:700px">
@@ -4646,7 +4934,7 @@
             <!-- JEE Main Card -->
             <div class="exam-select-card">
               <div class="esc-header">
-                <div class="esc-logo">🧪</div>
+                <div class="esc-logo" style="display:flex;align-items:center;justify-content:center"><svg class="icon-large" viewBox="0 0 24 24" style="stroke:var(--purple)"><path d="M4.7 22h14.6c1.2 0 2-1.2 1.4-2.2L14.7 4h-5.4L3.3 19.8c-.6 1 0 2.2 1.4 2.2zM8.5 2h7M10 13h4"></path></svg></div>
                 <span class="exam-badge badge-competitive">Competitive</span>
               </div>
               <div class="esc-body">
@@ -4663,7 +4951,7 @@
             <!-- GATE Card -->
             <div class="exam-select-card">
               <div class="esc-header">
-                <div class="esc-logo">⚙️</div>
+                <div class="esc-logo" style="display:flex;align-items:center;justify-content:center"><svg class="icon-large" viewBox="0 0 24 24" style="stroke:var(--cyan)"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
                 <span class="exam-badge badge-university">Academic</span>
               </div>
               <div class="esc-body">
@@ -4680,7 +4968,7 @@
             <!-- UPSC Card -->
             <div class="exam-select-card">
               <div class="esc-header">
-                <div class="esc-logo">📜</div>
+                <div class="esc-logo" style="display:flex;align-items:center;justify-content:center"><svg class="icon-large" viewBox="0 0 24 24" style="stroke:var(--amber)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
                 <span class="exam-badge badge-recruitment">Civil Services</span>
               </div>
               <div class="esc-body">
@@ -4701,7 +4989,7 @@
           <div class="dec-circle-wrap">
             <div class="dec-circle"></div>
             <div class="dec-circle-inner"></div>
-            <div class="dec-lock">🔒</div>
+            <div class="dec-lock" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
           </div>
           <div class="dec-title" id="dec-title">Biometric DID Auth...</div>
           <div class="dec-log" id="dec-log"></div>
@@ -4718,7 +5006,7 @@
               </div>
             </div>
             <div class="nta-candidate-info">
-              <div class="nta-candidate-photo">👤</div>
+              <div class="nta-candidate-photo" style="display:flex;align-items:center;justify-content:center;padding:4px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;display:block;opacity:0.65"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
               <div class="nta-details-grid">
                 <span class="nta-detail-label">Candidate Name:</span><span class="nta-detail-val" id="jee-cand-name">Riya Singh</span>
                 <span class="nta-detail-label">Subject Name:</span><span class="nta-detail-val">Test Practice</span>
@@ -4789,7 +5077,7 @@
           <div class="gate-header">
             <div class="gate-title-text">Graduate Aptitude Test in Engineering (GATE 2026 CS)</div>
             <div class="gate-cand-badge">
-              <div class="gate-cand-photo">👤</div>
+              <div class="gate-cand-photo" style="display:flex;align-items:center;justify-content:center;padding:4px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;display:block;opacity:0.65"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
               <div>
                 <div style="font-weight:bold">Riya Singh</div>
                 <div style="font-size:0.7rem;color:#ccc">Candidate ID: cand_98231</div>
@@ -4897,7 +5185,7 @@
           <div class="nta-dialog" id="summary-dialog">
             <div class="nta-dialog-header">
               <span id="dialog-header-title">Exam Submission Summary</span>
-              <span style="cursor:pointer" onclick="closeSubmitSummary()">✕</span>
+              <span style="cursor:pointer;display:inline-flex;align-items:center" onclick="closeSubmitSummary()"><svg class="icon-inline" viewBox="0 0 24 24" style="width:14px;height:14px;margin-right:0"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
             </div>
             <div class="nta-dialog-body">
               <p style="font-size:0.85rem;margin-bottom:12px;font-weight:600">Please review your answer stats before final submission:</p>
@@ -4916,8 +5204,9 @@
                   <!-- Injected by JS -->
                 </tbody>
               </table>
-              <div style="margin-top:16px;font-size:0.72rem;color:#e05320;border:1px solid #fca5a5;background:#fff5f5;padding:10px;border-radius:4px" id="blockchain-alert-text">
-                🚨 Once submitted, your exam ledger will be permanently sealed, anchored to the blockchain, and graded by the AI evaluation agent. No changes are permitted after this.
+              <div style="margin-top:16px;font-size:0.72rem;color:#e05320;border:1px solid #fca5a5;background:#fff5f5;padding:10px;border-radius:4px;display:flex;align-items:center;gap:8px" id="blockchain-alert-text">
+                <svg class="icon-inline" viewBox="0 0 24 24" style="color:#e05320;flex-shrink:0;margin-right:0;width:1.2em;height:1.2em"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span>Once submitted, your exam ledger will be permanently sealed, anchored to the blockchain, and graded by the AI evaluation agent. No changes are permitted after this.
               </div>
             </div>
             <div class="nta-dialog-footer">
@@ -4932,16 +5221,16 @@
       <div id="page-proctoring" class="page">
         <!-- Sub-tabs for proctor panels -->
         <div class="proctor-tab-nav">
-          <div class="proctor-tab active" onclick="switchProctorTab('proctor-panel')">🎥 AI Proctor's Panel</div>
-          <div class="proctor-tab" onclick="switchProctorTab('institute-dashboard')">🏢 Institute Dashboard</div>
-          <div class="proctor-tab" onclick="switchProctorTab('examiner-panel')">✍️ Examiner Panel</div>
-          <div class="proctor-tab" onclick="switchProctorTab('authority-dashboard')">🏛️ Authority Dashboard</div>
+          <div class="proctor-tab active" onclick="switchProctorTab('proctor-panel')"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>AI Proctor's Panel</div>
+          <div class="proctor-tab" onclick="switchProctorTab('institute-dashboard')"><svg class="icon-inline" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="16"></line><line x1="15" y1="22" x2="15" y2="16"></line><line x1="9" y1="16" x2="15" y2="16"></line><path d="M8 6h2v2H8V6zm4 0h2v2h-2V6zm4 0h2v2h-2V6zM8 10h2v2H8v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z"></path></svg>Institute Dashboard</div>
+          <div class="proctor-tab" onclick="switchProctorTab('examiner-panel')"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>Examiner Panel</div>
+          <div class="proctor-tab" onclick="switchProctorTab('authority-dashboard')"><svg class="icon-inline" viewBox="0 0 24 24"><line x1="2" y1="22" x2="22" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line><path d="M4 6h16l-8-4-8 4zM4 10h16v11H4V10zm3 0v11m5-11v11m5-11v11"></path></svg>Authority Dashboard</div>
         </div>
 
         <!-- 1. PROCTOR PANEL -->
         <div id="proctor-panel-content" class="proctor-tab-content active-content">
           <div class="section-header">
-            <div class="section-title">🎥 AI Proctoring Dashboard — Live Sessions</div>
+            <div class="section-title"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>AI Proctoring Dashboard — Live Sessions</div>
             <div style="display:flex;gap:8px">
               <button class="btn-outline" style="padding:6px 14px;font-size:0.78rem">Filter by Risk</button>
               <button class="btn-primary" style="padding:6px 14px;font-size:0.78rem">View All Rooms</button>
@@ -4950,22 +5239,22 @@
 
           <div class="stats-grid" style="margin-bottom:20px">
             <div class="stat-card">
-              <div class="stat-label">🎥 Active Sessions</div>
+              <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>Active Sessions</div>
               <div class="stat-val">1,102</div>
               <div class="stat-change live">● Live</div>
             </div>
             <div class="stat-card">
-              <div class="stat-label">🚨 High Risk Alerts</div>
+              <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>High Risk Alerts</div>
               <div class="stat-val" style="color:var(--red)">7</div>
-              <div class="stat-change warn">⚠ Immediate Review</div>
+              <div class="stat-change warn"><svg class="icon-inline" viewBox="0 0 24 24" style="width:1.0em;height:1.0em;margin-right:4px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>Immediate Review</div>
             </div>
             <div class="stat-card">
-              <div class="stat-label">⚠ Medium Risk</div>
+              <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>Medium Risk</div>
               <div class="stat-val" style="color:var(--amber)">23</div>
               <div class="stat-change warn">~ Monitoring</div>
             </div>
             <div class="stat-card">
-              <div class="stat-label">✅ Clear Sessions</div>
+              <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>Clear Sessions</div>
               <div class="stat-val" style="color:var(--green)">1,072</div>
               <div class="stat-change up">Normal</div>
             </div>
@@ -4975,7 +5264,7 @@
             <!-- Ankit Sharma -->
             <div class="proctor-cam alert-cam" style="position:relative">
               <div class="cam-bg" style="position:relative; overflow:hidden">
-                <span style="font-size:4rem">👤</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:50px;height:50px;opacity:0.65"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <!-- Face Mesh overlay simulated -->
                 <div class="mesh-overlay">
                   <div class="mesh-dot alert" style="top:30%; left:45%"></div>
@@ -5000,7 +5289,7 @@
             <!-- Priya Patel -->
             <div class="proctor-cam alert-cam" style="position:relative">
               <div class="cam-bg" style="position:relative; overflow:hidden">
-                <span style="font-size:4rem">👤</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:50px;height:50px;opacity:0.65"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <div class="mesh-overlay">
                   <div class="mesh-dot" style="top:30%; left:45%; background:orange"></div>
                   <div class="mesh-dot" style="top:32%; left:55%; background:orange"></div>
@@ -5021,7 +5310,7 @@
             <!-- Riya Singh (Current User Candidate) -->
             <div class="proctor-cam" style="position:relative" id="proctor-riya-card">
               <div class="cam-bg" style="position:relative; overflow:hidden">
-                <span style="font-size:4rem">👤</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:50px;height:50px;opacity:0.65"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <!-- Healthy Green face mesh and centered gaze -->
                 <div class="mesh-overlay">
                   <!-- Eye points -->
@@ -5050,7 +5339,7 @@
             <!-- Kunal Mehta -->
             <div class="proctor-cam" style="position:relative">
               <div class="cam-bg" style="position:relative; overflow:hidden">
-                <span style="font-size:4rem">👤</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:50px;height:50px;opacity:0.65"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <div class="mesh-overlay">
                   <div class="mesh-dot" style="top:32%; left:42%"></div>
                   <div class="mesh-dot" style="top:32%; left:58%"></div>
@@ -5071,7 +5360,7 @@
             <!-- Meera Iyer -->
             <div class="proctor-cam alert-cam" style="position:relative">
               <div class="cam-bg" style="position:relative; overflow:hidden">
-                <span style="font-size:4rem">👤</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:50px;height:50px;opacity:0.65"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <div class="mesh-overlay">
                   <div class="mesh-dot alert" style="top:32%; left:42%"></div>
                   <div class="mesh-dot alert" style="top:32%; left:58%"></div>
@@ -5092,7 +5381,7 @@
             <!-- Rahul Gupta -->
             <div class="proctor-cam" style="position:relative">
               <div class="cam-bg" style="position:relative; overflow:hidden">
-                <span style="font-size:4rem">👤</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:50px;height:50px;opacity:0.65"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <div class="mesh-overlay">
                   <div class="mesh-dot" style="top:32%; left:42%"></div>
                   <div class="mesh-dot" style="top:32%; left:58%"></div>
@@ -5149,7 +5438,7 @@
         <!-- 2. INSTITUTE DASHBOARD -->
         <div id="institute-dashboard-content" class="proctor-tab-content">
           <div class="section-header">
-            <div class="section-title">🏢 Institute Compliance & Integrity Operations</div>
+            <div class="section-title"><svg class="icon-inline" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="16"></line><line x1="15" y1="22" x2="15" y2="16"></line><line x1="9" y1="16" x2="15" y2="16"></line><path d="M8 6h2v2H8V6zm4 0h2v2h-2V6zm4 0h2v2h-2V6zM8 10h2v2H8v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z"></path></svg>Institute Compliance & Integrity Operations</div>
             <div style="font-size:0.8rem; color:var(--text3)">ExaChain Node Node-IITD-02</div>
           </div>
 
@@ -5157,7 +5446,7 @@
             <div class="card" style="padding:20px">
               <div style="font-size:0.8rem;color:var(--text3);margin-bottom:8px">Global Safety Index</div>
               <div style="font-size:1.8rem;font-weight:bold;color:var(--green)">98.4%</div>
-              <div style="font-size:0.7rem;color:var(--green);margin-top:4px">✓ Optimal threshold maintained</div>
+              <div style="font-size:0.7rem;color:var(--green);margin-top:4px;display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="width:0.85em;height:0.85em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Optimal threshold maintained</div>
             </div>
             <div class="card" style="padding:20px">
               <div style="font-size:0.8rem;color:var(--text3);margin-bottom:8px">Cheating Incidents Checked</div>
@@ -5167,7 +5456,7 @@
             <div class="card" style="padding:20px">
               <div style="font-size:0.8rem;color:var(--text3);margin-bottom:8px">Suspended DID Credentials</div>
               <div style="font-size:1.8rem;font-weight:bold;color:var(--red)" id="suspended-count">3</div>
-              <div style="font-size:0.7rem;color:var(--red);margin-top:4px">🚫 Evicted for severe fraud violations</div>
+              <div style="font-size:0.7rem;color:var(--red);margin-top:4px;display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="width:0.85em;height:0.85em;margin-right:4px;color:var(--red)"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>Evicted for severe fraud violations</div>
             </div>
           </div>
 
@@ -5178,28 +5467,28 @@
               <div class="card-body">
                 <div style="display:flex;flex-direction:column;gap:12px;font-size:0.82rem">
                   <div style="display:flex;align-items:center;gap:10px">
-                    <span style="color:var(--green);font-size:1.1rem">✓</span>
+                    <svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1.2em;height:1.2em;margin-right:0;flex-shrink:0"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <div>
                       <strong>Spectator AI Webcam &amp; Audio Stream Monitoring</strong>
                       <div style="font-size:0.7rem;color:var(--text3)">Verifies candidate environment integrity.</div>
                     </div>
                   </div>
                   <div style="display:flex;align-items:center;gap:10px">
-                    <span style="color:var(--green);font-size:1.1rem">✓</span>
+                    <svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1.2em;height:1.2em;margin-right:0;flex-shrink:0"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <div>
                       <strong>FaceID &amp; VoiceID Biometric Validation</strong>
                       <div style="font-size:0.7rem;color:var(--text3)">Pre-exam reference checking &amp; regular mid-exam matching.</div>
                     </div>
                   </div>
                   <div style="display:flex;align-items:center;gap:10px">
-                    <span style="color:var(--green);font-size:1.1rem">✓</span>
+                    <svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1.2em;height:1.2em;margin-right:0;flex-shrink:0"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <div>
                       <strong>GPS Location &amp; Camera Hall Scanning</strong>
                       <div style="font-size:0.7rem;color:var(--text3)">Ensures physically authorized examination room locations.</div>
                     </div>
                   </div>
                   <div style="display:flex;align-items:center;gap:10px">
-                    <span style="color:var(--green);font-size:1.1rem">✓</span>
+                    <svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1.2em;height:1.2em;margin-right:0;flex-shrink:0"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <div>
                       <strong>ExaChain Multi-Signature Paper Decryption</strong>
                       <div style="font-size:0.7rem;color:var(--text3)">Requires authority approvals to decrypt paper hashes.</div>
@@ -5246,7 +5535,7 @@
         <!-- 3. EXAMINER PANEL -->
         <div id="examiner-panel-content" class="proctor-tab-content">
           <div class="section-header">
-            <div class="section-title">✍️ Examiner Panel — Candidate Performance & Integrity Grading</div>
+            <div class="section-title"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>Examiner Panel — Candidate Performance & Integrity Grading</div>
             <div style="font-size:0.8rem; color:var(--text3)">Secure evaluation panel</div>
           </div>
 
@@ -5275,7 +5564,7 @@
                       </div>
                     </td>
                     <td>180 CPM (Consistent)</td>
-                    <td><span style="color:var(--green)">✓ All Clear / Verified</span></td>
+                    <td><span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>All Clear / Verified</span></td>
                     <td style="text-align:right"><span style="color:var(--green)">Auto-Scored</span></td>
                   </tr>
                   <tr style="border-bottom:1px solid rgba(255,255,255,0.03)">
@@ -5288,7 +5577,7 @@
                       </div>
                     </td>
                     <td style="color:var(--red)">340 CPM (Copy-paste spike)</td>
-                    <td><span style="color:var(--red)">🚨 Integrity Breach Flagged</span></td>
+                    <td><span style="color:var(--red);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red);width:1em;height:1em;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Integrity Breach Flagged</span></td>
                     <td style="text-align:right"><button class="btn-outline" style="padding:4px 8px;font-size:0.65rem" onclick="alert('Reviewing Ankit Sharma\'s keystroke history logs on ExaChain...')">Audit Logs</button></td>
                   </tr>
                   <tr style="border-bottom:1px solid rgba(255,255,255,0.03)">
@@ -5301,7 +5590,7 @@
                       </div>
                     </td>
                     <td>145 CPM (Normal)</td>
-                    <td><span style="color:var(--amber)">⚠ Reviewing gaze flags</span></td>
+                    <td><span style="color:var(--amber);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--amber);width:1em;height:1em;margin-right:4px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>Reviewing gaze flags</span></td>
                     <td style="text-align:right"><button class="btn-outline" style="padding:4px 8px;font-size:0.65rem" onclick="alert('Reviewing Priya Patel\'s room scans & voice frequency charts...')">Audit Logs</button></td>
                   </tr>
                 </tbody>
@@ -5313,7 +5602,7 @@
         <!-- 4. AUTHORITY DASHBOARD -->
         <div id="authority-dashboard-content" class="proctor-tab-content">
           <div class="section-header">
-            <div class="section-title">🏛️ National/State Examination Authority Dashboard (NTA, UPSC)</div>
+            <div class="section-title"><svg class="icon-inline" viewBox="0 0 24 24"><line x1="2" y1="22" x2="22" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line><path d="M4 6h16l-8-4-8 4zM4 10h16v11H4V10zm3 0v11m5-11v11m5-11v11"></path></svg>National/State Examination Authority Dashboard (NTA, UPSC)</div>
             <div style="font-size:0.8rem; color:var(--text3)">ExaChain Decentralized Network Operations</div>
           </div>
 
@@ -5347,7 +5636,7 @@
                     <span style="color:var(--text2)">Paper Decryption Smart Contract Released for <strong>JEE Main Mock Test</strong></span>
                   </div>
                   <div style="text-align:right">
-                    <span style="color:var(--green)">✓ Anchored</span><br><span style="color:var(--text3);font-size:0.65rem">10s ago</span>
+                    <span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Anchored</span><br><span style="color:var(--text3);font-size:0.65rem">10s ago</span>
                   </div>
                 </div>
                 <div style="padding:10px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:0.75rem;display:flex;justify-content:space-between">
@@ -5356,7 +5645,7 @@
                     <span style="color:var(--text2)">Biometric Verification hash anchoring for <strong>2,120 candidate registrations</strong></span>
                   </div>
                   <div style="text-align:right">
-                    <span style="color:var(--green)">✓ Anchored</span><br><span style="color:var(--text3);font-size:0.65rem">45s ago</span>
+                    <span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Anchored</span><br><span style="color:var(--text3);font-size:0.65rem">45s ago</span>
                   </div>
                 </div>
                 <div style="padding:10px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:0.75rem;display:flex;justify-content:space-between">
@@ -5365,7 +5654,7 @@
                     <span style="color:var(--text2)">Tamper-proof submission snapshot anchor for <strong>Riya Singh</strong></span>
                   </div>
                   <div style="text-align:right">
-                    <span style="color:var(--green)">✓ Anchored</span><br><span style="color:var(--text3);font-size:0.65rem">3m ago</span>
+                    <span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Anchored</span><br><span style="color:var(--text3);font-size:0.65rem">3m ago</span>
                   </div>
                 </div>
               </div>
@@ -5378,38 +5667,38 @@
       <div id="page-audit" class="page" style="position:relative">
         <div class="encrypted-lock-overlay" id="lock-page-audit">
           <div class="encrypted-lock-card">
-            <div class="encrypted-lock-icon">🔒</div>
+            <div class="encrypted-lock-icon" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
             <div class="encrypted-lock-title">ExaChain Decryption Key Required</div>
             <div class="encrypted-lock-desc">
               This page contains sensitive, exam-specific records encrypted on the ledger. 
               Please authenticate your Decentralized Identifier (DID) and verify biometrics in the Exam Room to unlock this data.
             </div>
-            <button class="btn-primary" onclick="showPage('examroom')">🔑 Go to Exam Room</button>
+            <button class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center" onclick="showPage('examroom')"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>Go to Exam Room</button>
           </div>
         </div>
         <div class="section-header">
-          <div class="section-title">📜 Immutable Audit Trail</div>
+          <div class="section-title" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>Immutable Audit Trail</div>
           <button class="btn-primary" style="padding:8px 18px;font-size:0.82rem">Export CSV/PDF</button>
         </div>
 
         <div class="stats-grid" style="margin-bottom:20px">
           <div class="stat-card">
-            <div class="stat-label">📦 Total Events</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Total Events</div>
             <div class="stat-val">1,284,492</div>
             <div class="stat-change up">Immutable</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">⛓ Blocks Written</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>Blocks Written</div>
             <div class="stat-val">47,203</div>
             <div class="stat-change live">● Live</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">🔐 Zero Tamper Rate</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="22 11.08 12 19 9 16"></polyline></svg>Zero Tamper Rate</div>
             <div class="stat-val" style="color:var(--green)">100%</div>
             <div class="stat-change up">Verified</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">⚡ Avg Confirm Time</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Avg Confirm Time</div>
             <div class="stat-val">1.4s</div>
             <div class="stat-change up">Fast</div>
           </div>
@@ -5421,49 +5710,49 @@
           </div>
           <div class="card-body">
             <div class="audit-item">
-              <div class="audit-icon" style="background:rgba(16,185,129,0.1)">📤</div>
+              <div class="audit-icon" style="background:rgba(16,185,129,0.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg></div>
               <div class="audit-body">
                 <div class="audit-action">Final submission sealed — Riya Singh · JEE Main Mock Test</div>
                 <div class="audit-detail">Exam ID: EX-2026-0472 · Candidate: cand_98231 · Status: Immutable</div>
                 <div class="audit-hash">0x7f4a2b9e1d5c8f30a6be4d21f9c7e...3a12 · Block #1,847,310</div>
               </div>
-              <div class="audit-time">12:34 PM<br><span style="color:var(--green)">✓ Confirmed</span></div>
+              <div class="audit-time">12:34 PM<br><span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Confirmed</span></div>
             </div>
             <div class="audit-item">
-              <div class="audit-icon" style="background:rgba(99,102,241,0.1)">🔔</div>
+              <div class="audit-icon" style="background:rgba(99,102,241,0.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></div>
               <div class="audit-body">
                 <div class="audit-action">AI proctoring alert logged — Multiple face detection (High)</div>
                 <div class="audit-detail">Room: A-102 · Proctor notified · Confidence: 97.3%</div>
                 <div class="audit-hash">0x3d9f1c6a8e2b4f70d1ac5b98e7f2...8c09 · Block #1,847,302</div>
               </div>
-              <div class="audit-time">12:34 PM<br><span style="color:var(--green)">✓ Confirmed</span></div>
+              <div class="audit-time">12:34 PM<br><span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Confirmed</span></div>
             </div>
             <div class="audit-item">
-              <div class="audit-icon" style="background:rgba(6,182,212,0.1)">🔑</div>
+              <div class="audit-icon" style="background:rgba(6,182,212,0.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg></div>
               <div class="audit-body">
                 <div class="audit-action">Smart contract unlocked — JEE Main Mock Test paper released</div>
                 <div class="audit-detail">Release time: 09:00:00 AM · 24,532 candidates authorized · Automated</div>
                 <div class="audit-hash">0xc1a8f2d6b4e9073f5d2c1a87b6e4...f031 · Block #1,846,812</div>
               </div>
-              <div class="audit-time">09:00 AM<br><span style="color:var(--green)">✓ Confirmed</span></div>
+              <div class="audit-time">09:00 AM<br><span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Confirmed</span></div>
             </div>
             <div class="audit-item">
-              <div class="audit-icon" style="background:rgba(245,158,11,0.1)">📝</div>
+              <div class="audit-icon" style="background:rgba(245,158,11,0.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
               <div class="audit-body">
                 <div class="audit-action">Checkpoint anchored — 143 candidates · Auto-save batch</div>
                 <div class="audit-detail">Interval: 5 minutes · Hashes: 143 · No duplicates</div>
                 <div class="audit-hash">0xa4f9c2e17d30b6f8a1c5d9e2f7b4...2e88 · Block #1,847,290</div>
               </div>
-              <div class="audit-time">12:28 PM<br><span style="color:var(--green)">✓ Confirmed</span></div>
+              <div class="audit-time">12:28 PM<br><span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Confirmed</span></div>
             </div>
             <div class="audit-item">
-              <div class="audit-icon" style="background:rgba(139,92,246,0.1)">👤</div>
+              <div class="audit-icon" style="background:rgba(139,92,246,0.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
               <div class="audit-body">
                 <div class="audit-action">Identity verification passed — Biometric match confirmed</div>
                 <div class="audit-detail">Candidate: Ankit Sharma · Exam: JEE Main · Method: Biometric + DID</div>
                 <div class="audit-hash">0xe2b7d4a9f1c6380d5a2e4b8f9c1e...7d44 · Block #1,846,800</div>
               </div>
-              <div class="audit-time">08:52 AM<br><span style="color:var(--green)">✓ Confirmed</span></div>
+              <div class="audit-time">08:52 AM<br><span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Confirmed</span></div>
             </div>
           </div>
         </div>
@@ -5473,25 +5762,23 @@
       <div id="page-certificates" class="page" style="position:relative">
         <div class="encrypted-lock-overlay" id="lock-page-certificates">
           <div class="encrypted-lock-card">
-            <div class="encrypted-lock-icon">🔒</div>
+            <div class="encrypted-lock-icon" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
             <div class="encrypted-lock-title">ExaChain Decryption Key Required</div>
             <div class="encrypted-lock-desc">
               This page contains sensitive, exam-specific records encrypted on the ledger. 
               Please authenticate your Decentralized Identifier (DID) and verify biometrics in the Exam Room to unlock this data.
             </div>
-            <button class="btn-primary" onclick="showPage('examroom')">🔑 Go to Exam Room</button>
+            <button class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center" onclick="showPage('examroom')"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>Go to Exam Room</button>
           </div>
         </div>
         <div class="section-header">
-          <div class="section-title">🏆 Blockchain-Verified Certificates</div>
+          <div class="section-title" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>Blockchain-Verified Certificates</div>
           <button class="btn-primary" style="padding:8px 18px;font-size:0.82rem">Issue Batch</button>
         </div>
 
         <div class="grid-3">
           <div class="cert-preview" style="padding:20px">
-            <div
-              style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px">
-              🏆</div>
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:white"><svg class="icon-large" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"></path><path d="M12 2a6 6 0 0 1 6 6v1H6V8a6 6 0 0 1 6-6z"></path></svg></div>
             <div class="cert-title">Certificate of Achievement</div>
             <div class="cert-name">Riya Singh</div>
             <div class="cert-exam">JEE Main Mock Test 2026</div>
@@ -5499,12 +5786,10 @@
             <div style="margin-top:8px;font-size:0.65rem;color:var(--text3)">Issued: 25 May 2026</div>
             <div style="font-family:var(--mono);font-size:0.6rem;color:var(--cyan);margin-top:4px;word-break:break-all">
               CERT-0x7f4a2b9e...3a12</div>
-            <button class="verify-btn">🛡 Verify on Blockchain</button>
+            <button class="verify-btn" style="display:inline-flex;align-items:center;justify-content:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg>Verify on Blockchain</button>
           </div>
           <div class="cert-preview" style="padding:20px">
-            <div
-              style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--green));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px">
-              🎓</div>
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--green));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:white"><svg class="icon-large" style="width:22px;height:22px" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg></div>
             <div class="cert-title">Certificate of Achievement</div>
             <div class="cert-name">Kunal Mehta</div>
             <div class="cert-exam">B.Tech Sem 4 Exam 2026</div>
@@ -5512,12 +5797,10 @@
             <div style="margin-top:8px;font-size:0.65rem;color:var(--text3)">Issued: 29 May 2026</div>
             <div style="font-family:var(--mono);font-size:0.6rem;color:var(--cyan);margin-top:4px;word-break:break-all">
               CERT-0xa4f9c2e1...2e88</div>
-            <button class="verify-btn">🛡 Verify on Blockchain</button>
+            <button class="verify-btn" style="display:inline-flex;align-items:center;justify-content:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg>Verify on Blockchain</button>
           </div>
           <div class="cert-preview" style="padding:20px">
-            <div
-              style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--amber),var(--red));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px">
-              🏅</div>
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--amber),var(--red));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:white"><svg class="icon-large" style="width:22px;height:22px" viewBox="0 0 24 24"><circle cx="12" cy="14" r="6"></circle><path d="M15.47 2l-2.47 5h-2l-2.47-5z"></path><path d="M17 2H7"></path></svg></div>
             <div class="cert-title">Certificate of Achievement</div>
             <div class="cert-name">Priya Patel</div>
             <div class="cert-exam">SSC CGL Tier 1 2026</div>
@@ -5525,7 +5808,7 @@
             <div style="margin-top:8px;font-size:0.65rem;color:var(--text3)">Issued: 02 Jun 2026</div>
             <div style="font-family:var(--mono);font-size:0.6rem;color:var(--cyan);margin-top:4px;word-break:break-all">
               CERT-0xc1a8f2d6...f031</div>
-            <button class="verify-btn">🛡 Verify on Blockchain</button>
+            <button class="verify-btn" style="display:inline-flex;align-items:center;justify-content:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg>Verify on Blockchain</button>
           </div>
         </div>
       </div>
@@ -5534,17 +5817,17 @@
       <div id="page-identity" class="page" style="position:relative">
         <div class="encrypted-lock-overlay" id="lock-page-identity">
           <div class="encrypted-lock-card">
-            <div class="encrypted-lock-icon">🔒</div>
+            <div class="encrypted-lock-icon" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
             <div class="encrypted-lock-title">ExaChain Decryption Key Required</div>
             <div class="encrypted-lock-desc">
               This page contains sensitive, exam-specific records encrypted on the ledger. 
               Please authenticate your Decentralized Identifier (DID) and verify biometrics in the Exam Room to unlock this data.
             </div>
-            <button class="btn-primary" onclick="showPage('examroom')">🔑 Go to Exam Room</button>
+            <button class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center" onclick="showPage('examroom')"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>Go to Exam Room</button>
           </div>
         </div>
         <div class="section-header">
-          <div class="section-title">🛡️ Identity Verification System</div>
+          <div class="section-title" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg>Identity Verification System</div>
         </div>
         <div class="grid-2">
           <div class="identity-card">
@@ -5554,35 +5837,35 @@
             </div>
             <div class="id-steps">
               <div class="id-step">
-                <div class="id-step-icon" style="background:rgba(16,185,129,0.1)">📧</div>
+                <div class="id-step-icon" style="background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" style="color:var(--green)" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
                 <div class="id-step-info">
                   <div class="id-step-name">Email / Phone Verification</div>
                   <div class="id-step-desc">OTP-based contact confirmation</div>
-                </div><span class="id-step-status id-status-done">✓ Done</span>
+                </div><span class="id-step-status id-status-done"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Done</span>
               </div>
               <div class="id-step">
-                <div class="id-step-icon" style="background:rgba(16,185,129,0.1)">🪪</div>
+                <div class="id-step-icon" style="background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" style="color:var(--green)" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="7" y1="8" x2="17" y2="8"></line><line x1="7" y1="12" x2="17" y2="12"></line><line x1="7" y1="16" x2="13" y2="16"></line></svg></div>
                 <div class="id-step-info">
                   <div class="id-step-name">Institutional ID Upload</div>
                   <div class="id-step-desc">College/Board registration number</div>
-                </div><span class="id-step-status id-status-done">✓ Done</span>
+                </div><span class="id-step-status id-status-done"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Done</span>
               </div>
               <div class="id-step">
-                <div class="id-step-icon" style="background:rgba(16,185,129,0.1)">🧬</div>
+                <div class="id-step-icon" style="background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" style="color:var(--green)" viewBox="0 0 24 24"><path d="M4.5 10.5c.7-2 2.3-3.5 4.5-3.5 3 0 5 3 5 6s2 6 5 6c2.2 0 3.8-1.5 4.5-3.5"></path><path d="M4.5 13.5c.7 2 2.3 3.5 4.5 3.5 3 0 5-3 5-6s2-6 5-6c2.2 0 3.8-1.5 4.5 3.5"></path><line x1="6" y1="9" x2="6" y2="15"></line><line x1="12" y1="9" x2="12" y2="15"></line><line x1="18" y1="9" x2="18" y2="15"></line></svg></div>
                 <div class="id-step-info">
                   <div class="id-step-name">Biometric Template</div>
                   <div class="id-step-desc">Encrypted face template reference</div>
-                </div><span class="id-step-status id-status-done">✓ Done</span>
+                </div><span class="id-step-status id-status-done"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Done</span>
               </div>
               <div class="id-step">
-                <div class="id-step-icon" style="background:rgba(6,182,212,0.1)">🔑</div>
+                <div class="id-step-icon" style="background:rgba(6,182,212,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" style="color:var(--cyan)" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg></div>
                 <div class="id-step-info">
                   <div class="id-step-name">DID Wallet Linking</div>
                   <div class="id-step-desc">Decentralized identity credential</div>
-                </div><span class="id-step-status id-status-done">✓ Done</span>
+                </div><span class="id-step-status id-status-done"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Done</span>
               </div>
               <div class="id-step">
-                <div class="id-step-icon" style="background:rgba(245,158,11,0.1)">📸</div>
+                <div class="id-step-icon" style="background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center"><svg class="icon-large" style="color:var(--amber)" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div>
                 <div class="id-step-info">
                   <div class="id-step-name">Live Face Match (Exam Day)</div>
                   <div class="id-step-desc">Real-time biometric verification</div>
@@ -5632,38 +5915,38 @@
       <div id="page-exams" class="page" style="position:relative">
         <div class="encrypted-lock-overlay" id="lock-page-exams">
           <div class="encrypted-lock-card">
-            <div class="encrypted-lock-icon">🔒</div>
+            <div class="encrypted-lock-icon" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
             <div class="encrypted-lock-title">ExaChain Decryption Key Required</div>
             <div class="encrypted-lock-desc">
               This page contains sensitive, exam-specific records encrypted on the ledger. 
               Please authenticate your Decentralized Identifier (DID) and verify biometrics in the Exam Room to unlock this data.
             </div>
-            <button class="btn-primary" onclick="showPage('examroom')">🔑 Go to Exam Room</button>
+            <button class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center" onclick="showPage('examroom')"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>Go to Exam Room</button>
           </div>
         </div>
         <div class="section-header">
-          <div class="section-title">📋 Exam Management</div>
+          <div class="section-title" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M9 12h6M9 16h6"></path></svg>Exam Management</div>
           <button class="btn-primary" style="padding:8px 18px;font-size:0.82rem">+ Create Exam</button>
         </div>
 
         <div class="stats-grid" style="margin-bottom:20px">
           <div class="stat-card">
-            <div class="stat-label">📋 Total Exams</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M9 12h6M9 16h6"></path></svg>Total Exams</div>
             <div class="stat-val">247</div>
             <div class="stat-change up">This year</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">🟢 Active Now</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green)"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3" fill="currentColor"></circle></svg>Active Now</div>
             <div class="stat-val">12</div>
             <div class="stat-change live">● Live</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">📅 Scheduled</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Scheduled</div>
             <div class="stat-val">38</div>
             <div class="stat-change up">Next 30 days</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">✅ Completed</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>Completed</div>
             <div class="stat-val">197</div>
             <div class="stat-change up">All archived</div>
           </div>
@@ -5730,37 +6013,37 @@
       <div id="page-results" class="page" style="position:relative">
         <div class="encrypted-lock-overlay" id="lock-page-results">
           <div class="encrypted-lock-card">
-            <div class="encrypted-lock-icon">🔒</div>
+            <div class="encrypted-lock-icon" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
             <div class="encrypted-lock-title">ExaChain Decryption Key Required</div>
             <div class="encrypted-lock-desc">
               This page contains sensitive, exam-specific records encrypted on the ledger. 
               Please authenticate your Decentralized Identifier (DID) and verify biometrics in the Exam Room to unlock this data.
             </div>
-            <button class="btn-primary" onclick="showPage('examroom')">🔑 Go to Exam Room</button>
+            <button class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center" onclick="showPage('examroom')"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>Go to Exam Room</button>
           </div>
         </div>
         <div class="section-header">
-          <div class="section-title">📊 Results & Analytics</div>
+          <div class="section-title" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>Results &amp; Analytics</div>
           <button class="btn-primary" style="padding:8px 18px;font-size:0.82rem">Export Report</button>
         </div>
         <div class="stats-grid" style="margin-bottom:20px">
           <div class="stat-card">
-            <div class="stat-label">✅ Pass Rate</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>Pass Rate</div>
             <div class="stat-val" style="color:var(--green)">78%</div>
             <div class="stat-change up">▲ 3% from last batch</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">🎯 Avg Score</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>Avg Score</div>
             <div class="stat-val">64.2%</div>
             <div class="stat-change up">Normal distribution</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">🏆 Top Score</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"></path><path d="M12 2a6 6 0 0 1 6 6v1H6V8a6 6 0 0 1 6-6z"></path></svg>Top Score</div>
             <div class="stat-val">98.6%</div>
             <div class="stat-change live">Riya Singh</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">⛓ Results on-chain</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>Results on-chain</div>
             <div class="stat-val" style="color:var(--cyan)">100%</div>
             <div class="stat-change up">Tamper-proof</div>
           </div>
@@ -5803,17 +6086,17 @@
       <div id="page-vault" class="page" style="position:relative">
         <div class="encrypted-lock-overlay" id="lock-page-vault">
           <div class="encrypted-lock-card">
-            <div class="encrypted-lock-icon">🔒</div>
+            <div class="encrypted-lock-icon" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
             <div class="encrypted-lock-title">ExaChain Decryption Key Required</div>
             <div class="encrypted-lock-desc">
               This page contains sensitive, exam-specific records encrypted on the ledger. 
               Please authenticate your Decentralized Identifier (DID) and verify biometrics in the Exam Room to unlock this data.
             </div>
-            <button class="btn-primary" onclick="showPage('examroom')">🔑 Go to Exam Room</button>
+            <button class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center" onclick="showPage('examroom')"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>Go to Exam Room</button>
           </div>
         </div>
         <div class="section-header">
-          <div class="section-title">🔐 Encrypted Question Vault</div>
+          <div class="section-title" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path><circle cx="12" cy="16" r="1.5"></circle></svg>Encrypted Question Vault</div>
           <button class="btn-primary" style="padding:8px 18px;font-size:0.82rem">Upload Paper</button>
         </div>
         <div class="card">
@@ -5823,9 +6106,7 @@
             <div style="display:flex;flex-direction:column;gap:14px" id="vault-list-container">
               <div
                 style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--card2);border-radius:10px;border:1px solid var(--border)">
-                <div
-                  style="width:40px;height:40px;border-radius:10px;background:rgba(99,102,241,0.1);display:flex;align-items:center;justify-content:center;font-size:20px">
-                  🔒</div>
+                <div style="width:40px;height:40px;border-radius:10px;background:rgba(99,102,241,0.1);display:flex;align-items:center;justify-content:center;color:var(--primary)"><svg class="icon-large" style="width:20px;height:20px" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
                 <div style="flex:1">
                   <div style="font-size:0.84rem;font-weight:600">JEE Main Mock Test — Physics.enc</div>
                   <div style="font-size:0.68rem;color:var(--text3);margin-top:3px">Uploaded: 20 May 2026 · Size: 4.2 MB
@@ -5833,15 +6114,13 @@
                   <div class="hash-text" style="margin-top:4px">SHA-256: 0x7f4a2b9e1d5c8f30a6be4d21f9c7e3a12...</div>
                 </div>
                 <div style="text-align:right">
-                  <div style="font-size:0.72rem;color:var(--amber);font-weight:600">🔒 LOCKED</div>
+                  <div style="font-size:0.72rem;color:var(--amber);font-weight:600;display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="width:1em;height:1em;margin-right:4px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>LOCKED</div>
                   <div style="font-size:0.65rem;color:var(--text3);margin-top:3px">Unlocks: 25 May 09:00 AM</div>
                 </div>
               </div>
               <div
                 style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--card2);border-radius:10px;border:1px solid var(--border)">
-                <div
-                  style="width:40px;height:40px;border-radius:10px;background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center;font-size:20px">
-                  🔓</div>
+                <div style="width:40px;height:40px;border-radius:10px;background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center;color:var(--green)"><svg class="icon-large" style="width:20px;height:20px" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg></div>
                 <div style="flex:1">
                   <div style="font-size:0.84rem;font-weight:600">Class 10 Midterm — Math.enc</div>
                   <div style="font-size:0.68rem;color:var(--text3);margin-top:3px">Uploaded: 10 May 2026 · Released on
@@ -5849,7 +6128,7 @@
                   <div class="hash-text" style="margin-top:4px">SHA-256: 0xa4f9c2e17d30b6f8a1c5d9e2f7b42e88...</div>
                 </div>
                 <div style="text-align:right">
-                  <div style="font-size:0.72rem;color:var(--green);font-weight:600">✓ RELEASED</div>
+                  <div style="font-size:0.72rem;color:var(--green);font-weight:600;display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="width:1em;height:1em;margin-right:4px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>RELEASED</div>
                   <div style="font-size:0.65rem;color:var(--text3);margin-top:3px">15 May 10:00 AM</div>
                 </div>
               </div>
@@ -5862,37 +6141,37 @@
       <div id="page-candidates" class="page" style="position:relative">
         <div class="encrypted-lock-overlay" id="lock-page-candidates">
           <div class="encrypted-lock-card">
-            <div class="encrypted-lock-icon">🔒</div>
+            <div class="encrypted-lock-icon" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
             <div class="encrypted-lock-title">ExaChain Decryption Key Required</div>
             <div class="encrypted-lock-desc">
               This page contains sensitive, exam-specific records encrypted on the ledger. 
               Please authenticate your Decentralized Identifier (DID) and verify biometrics in the Exam Room to unlock this data.
             </div>
-            <button class="btn-primary" onclick="showPage('examroom')">🔑 Go to Exam Room</button>
+            <button class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center" onclick="showPage('examroom')"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>Go to Exam Room</button>
           </div>
         </div>
         <div class="section-header">
-          <div class="section-title">👥 Candidate Management</div>
+          <div class="section-title" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Candidate Management</div>
           <button class="btn-primary" style="padding:8px 18px;font-size:0.82rem">+ Register Candidate</button>
         </div>
         <div class="stats-grid" style="margin-bottom:20px">
           <div class="stat-card">
-            <div class="stat-label">👥 Total Registered</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Total Registered</div>
             <div class="stat-val">2.12M</div>
             <div class="stat-change up">Across 28 states</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">✅ Identity Verified</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>Identity Verified</div>
             <div class="stat-val">2.10M</div>
             <div class="stat-change up">99.1%</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">⚠ Pending Verification</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--amber)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>Pending Verification</div>
             <div class="stat-val" style="color:var(--amber)">20,442</div>
             <div class="stat-change warn">Needs action</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">🚫 Flagged</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red)"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>Flagged</div>
             <div class="stat-val" style="color:var(--red)">147</div>
             <div class="stat-change warn">Under review</div>
           </div>
@@ -5914,21 +6193,21 @@
                 <tr style="border-bottom:1px solid rgba(99,125,255,0.07);cursor:pointer" onclick="openCandidateProfile('Riya Singh')">
                   <td style="padding:10px 0;font-weight:500">Riya Singh</td>
                   <td style="color:var(--text2)">JEE Main</td>
-                  <td><span style="color:var(--green);font-size:0.72rem">✓ Verified</span></td>
+                  <td><span style="color:var(--green);font-size:0.72rem;display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Verified</span></td>
                   <td style="text-align:right"><span class="hash-text">did:indy:0x7f4...3a12</span></td>
                   <td style="text-align:right"><span style="color:var(--green);font-size:0.72rem">● Active</span></td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(99,125,255,0.07);cursor:pointer" onclick="openCandidateProfile('Ankit Sharma')">
                   <td style="padding:10px 0;font-weight:500">Ankit Sharma</td>
                   <td style="color:var(--text2)">JEE Main</td>
-                  <td><span style="color:var(--green);font-size:0.72rem">✓ Verified</span></td>
+                  <td><span style="color:var(--green);font-size:0.72rem;display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Verified</span></td>
                   <td style="text-align:right"><span class="hash-text">did:indy:0xa4f...2e88</span></td>
-                  <td style="text-align:right"><span style="color:var(--amber);font-size:0.72rem">⚠ Flagged</span></td>
+                  <td style="text-align:right"><span style="color:var(--amber);font-size:0.72rem;display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--amber);width:1em;height:1em;margin-right:4px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>Flagged</span></td>
                 </tr>
                 <tr style="cursor:pointer" onclick="openCandidateProfile('Priya Patel')">
                   <td style="padding:10px 0;font-weight:500">Priya Patel</td>
                   <td style="color:var(--text2)">SSC CGL</td>
-                  <td><span style="color:var(--green);font-size:0.72rem">✓ Verified</span></td>
+                  <td><span style="color:var(--green);font-size:0.72rem;display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Verified</span></td>
                   <td style="text-align:right"><span class="hash-text">did:indy:0xc1a...f031</span></td>
                   <td style="text-align:right"><span style="color:var(--green);font-size:0.72rem">● Active</span></td>
                 </tr>
@@ -5941,26 +6220,26 @@
       <!-- ANALYTICS PAGE -->
       <div id="page-analytics" class="page">
         <div class="section-header">
-          <div class="section-title">📈 Analytics & Insights</div>
+          <div class="section-title"><svg class="icon-inline" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>Analytics & Insights</div>
         </div>
         <div class="stats-grid" style="margin-bottom:20px">
           <div class="stat-card">
-            <div class="stat-label">📉 Paper Leaks Prevented</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>Paper Leaks Prevented</div>
             <div class="stat-val" style="color:var(--green)">0</div>
             <div class="stat-change up">100% secure</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">🤖 AI Auto-graded</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4M8 16h8M16 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2M8 8H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2"></path></svg>AI Auto-graded</div>
             <div class="stat-val">94.2%</div>
             <div class="stat-change up">Objective Qs</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">⚡ Avg Unlock Time</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Avg Unlock Time</div>
             <div class="stat-val">0.3s</div>
             <div class="stat-change up">Smart contract</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">🌍 States Covered</div>
+            <div class="stat-label"><svg class="icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>States Covered</div>
             <div class="stat-val">28</div>
             <div class="stat-change live">● Expanding</div>
           </div>
@@ -6005,13 +6284,13 @@
       <!-- THIRD-PARTY CREDENTIAL VERIFICATION PORTAL -->
       <div id="page-verification" class="page">
         <div class="section-header">
-          <div class="section-title">🔍 Third-Party Credential Verification Portal</div>
+          <div class="section-title" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>Third-Party Credential Verification Portal</div>
         </div>
         
         <div class="verify-portal-grid">
           <!-- Left Input Card -->
           <div class="verify-card">
-            <h3 class="verify-title">🛡️ Verify Candidate Credentials</h3>
+            <h3 class="verify-title" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px;stroke:var(--purple)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg>Verify Candidate Credentials</h3>
             <p class="verify-desc">
               Recruiters and academic authorities can search for a candidate's Decentralized ID (DID) or ExaChain block transaction hash to instantly verify their academic record and exam integrity.
             </p>
@@ -6019,13 +6298,13 @@
             <div class="quick-pills-label">Quick Verify Candidates</div>
             <div class="quick-pills-container">
               <div class="quick-did-pill" onclick="selectQuickVerify('did:indy:0x7f4c10a12e32a688')">
-                👤 Riya Singh (JEE)
+                <svg class="icon-inline" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Riya Singh (JEE)
               </div>
               <div class="quick-did-pill" onclick="selectQuickVerify('did:indy:0xa4f28e88e312a105')">
-                👤 Ankit Sharma (Flagged)
+                <svg class="icon-inline" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Ankit Sharma (Flagged)
               </div>
               <div class="quick-did-pill" onclick="selectQuickVerify('did:indy:0xc1a3f031e882a991')">
-                👤 Priya Patel (Review)
+                <svg class="icon-inline" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Priya Patel (Review)
               </div>
             </div>
             
@@ -6036,8 +6315,8 @@
             
             <div class="qr-scan-section">
               <span style="font-size:0.78rem;color:var(--text3)">OR SCAN CANDIDATE PASS</span>
-              <button class="btn-qr-scan" onclick="startQrScan()">
-                📷 Scan Candidate QR Code
+              <button class="btn-qr-scan" style="display:inline-flex;align-items:center;justify-content:center" onclick="startQrScan()">
+                <svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>Scan Candidate QR Code
               </button>
             </div>
           </div>
@@ -6046,7 +6325,7 @@
           <div class="verify-card" id="verify-result-card" style="min-height:450px">
             <!-- Standby Placeholder -->
             <div class="verify-placeholder" id="verify-placeholder">
-              <div class="verify-placeholder-icon">🛡️</div>
+              <div class="verify-placeholder-icon" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:48px;height:48px;opacity:0.35"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg></div>
               <h3 style="color:var(--text);font-size:1.1rem;margin-bottom:8px">Awaiting Search or QR Scan</h3>
               <p style="font-size:0.8rem;max-width:320px;line-height:1.4">
                 Please scan a candidate's digital admit ticket QR code or input their DID signature above to query the ExaChain blockchain ledger.
@@ -6058,12 +6337,12 @@
               <div class="report-header">
                 <span style="font-size:0.85rem;color:var(--text3)">EXACHAIN LEDGER RECORD</span>
                 <span class="report-status-badge badge-success" id="verify-status-badge">
-                  ✓ Verified
+                  Verified
                 </span>
               </div>
               
               <div class="verify-profile-row">
-                <div class="verify-avatar" id="verify-avatar-icon">👤</div>
+                <div class="verify-avatar" id="verify-avatar-icon" style="display:flex;align-items:center;justify-content:center;padding:4px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;display:block;opacity:0.65"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
                 <div>
                   <div class="verify-candidate-name" id="verify-cand-name">Riya Singh</div>
                   <div class="verify-candidate-did" id="verify-cand-did">did:indy:0x7f4c10a12e32a688</div>
@@ -6097,20 +6376,20 @@
                 <div class="verify-checklist-title">Integrity Verification Audit</div>
                 
                 <div class="checklist-item">
-                  <span class="checklist-label">🔑 Decentralized Identifier (DID)</span>
-                  <span class="checklist-status" style="color:var(--green)" id="check-did-status">✓ Authenticated</span>
+                  <span class="checklist-label" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>Decentralized Identifier (DID)</span>
+                  <span class="checklist-status" style="color:var(--green)" id="check-did-status"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Authenticated</span>
                 </div>
                 <div class="checklist-item">
-                  <span class="checklist-label">👤 Biometric FaceID Record</span>
-                  <span class="checklist-status" style="color:var(--green)" id="check-face-status">✓ Matches Registrant</span>
+                  <span class="checklist-label" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Biometric FaceID Record</span>
+                  <span class="checklist-status" style="color:var(--green)" id="check-face-status"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Matches Registrant</span>
                 </div>
                 <div class="checklist-item">
-                  <span class="checklist-label">🎙️ Biometric VoiceID Match</span>
-                  <span class="checklist-status" style="color:var(--green)" id="check-voice-status">✓ Matches Registrant</span>
+                  <span class="checklist-label" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 19v4M8 23h8"></path></svg>Biometric VoiceID Match</span>
+                  <span class="checklist-status" style="color:var(--green)" id="check-voice-status"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Matches Registrant</span>
                 </div>
                 <div class="checklist-item">
-                  <span class="checklist-label">🤖 Spectator AI Cheating Audit</span>
-                  <span class="checklist-status" style="color:var(--green)" id="check-anomaly-status">✓ 0 Flagged Anomalies</span>
+                  <span class="checklist-label" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4M8 16h8M16 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2M8 8H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2"></path></svg>Spectator AI Cheating Audit</span>
+                  <span class="checklist-status" style="color:var(--green)" id="check-anomaly-status"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>0 Flagged Anomalies</span>
                 </div>
               </div>
               
@@ -6119,8 +6398,8 @@
                 <div class="crypto-steps-log" id="crypto-steps-log">
                   <!-- Steps injected here -->
                 </div>
-                <button class="btn-outline" id="btn-crypto-verify" style="width:100%" onclick="runCryptographicVerification()">
-                  ⛓️ Verify Cryptographic Block Hash
+                <button class="btn-outline" id="btn-crypto-verify" style="width:100%;display:inline-flex;align-items:center;justify-content:center" onclick="runCryptographicVerification()">
+                  <svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>Verify Cryptographic Block Hash
                 </button>
               </div>
             </div>
@@ -6135,8 +6414,8 @@
   <div class="qr-modal" id="qr-scanner-modal">
     <div class="qr-scanner-card">
       <div class="qr-scanner-header">
-        <div style="font-weight:bold;color:var(--text);font-size:0.95rem">📷 ExaChain QR Code Scanner</div>
-        <button class="btn-outline" style="padding:4px 8px;font-size:0.7rem;cursor:pointer" onclick="closeQrScan()">✕ Close</button>
+        <div style="font-weight:bold;color:var(--text);font-size:0.95rem;display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:6px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>ExaChain QR Code Scanner</div>
+        <button class="btn-outline" style="padding:4px 8px;font-size:0.7rem;cursor:pointer;display:inline-flex;align-items:center" onclick="closeQrScan()"><svg class="icon-inline" viewBox="0 0 24 24" style="width:12px;height:12px;margin-right:4px"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Close</button>
       </div>
       <p style="font-size:0.75rem;color:var(--text2);margin-bottom:15px">
         Align the candidate's digital pass QR code inside the target window.
@@ -6159,30 +6438,102 @@
   </div>
 
   <!-- SPECTATOR BOT CHATBOT WIDGET -->
-  <div class="bot-trigger" id="spectator-bot-trigger" onclick="toggleBotWindow()">
-    🤖
+  <div class="bot-trigger" id="spectator-bot-trigger" style="display:flex;align-items:center;justify-content:center" onclick="toggleBotWindow()">
+    <svg viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="spectator-bot-svg" style="width:34px;height:34px">
+      <!-- Left Speech Bubble -->
+      <circle cx="22" cy="26" r="11" stroke="white" stroke-width="2.5" fill="none" />
+      <path d="M22 37 L22 41 L26 37" stroke="white" stroke-width="2.5" fill="white" />
+      <circle cx="17" cy="26" r="1" fill="white" />
+      <circle cx="22" cy="26" r="1" fill="white" />
+      <circle cx="27" cy="26" r="1" fill="white" />
+      <!-- Right Speech Bubble -->
+      <circle cx="78" cy="26" r="11" stroke="white" stroke-width="2.5" fill="none" />
+      <path d="M78 37 L78 41 L74 37" stroke="white" stroke-width="2.5" fill="white" />
+      <rect x="73" y="21" width="10" height="10" rx="1.5" stroke="white" stroke-width="1.5" fill="none" />
+      <line x1="75.5" y1="24" x2="80.5" y2="24" stroke="white" stroke-width="1.5" />
+      <line x1="75.5" y1="26" x2="80.5" y2="26" stroke="white" stroke-width="1.5" />
+      <line x1="75.5" y1="28" x2="80.5" y2="28" stroke="white" stroke-width="1.5" />
+      <!-- Robot Antenna -->
+      <line x1="50" y1="32" x2="50" y2="18" stroke="white" stroke-width="3" />
+      <circle cx="50" cy="15" r="4" fill="white" />
+      <!-- Robot Headphones/Ears -->
+      <rect x="25" y="42" width="6" height="14" rx="3" fill="white" />
+      <rect x="69" y="42" width="6" height="14" rx="3" fill="white" />
+      <circle cx="25" cy="49" r="2" fill="white" />
+      <circle cx="75" cy="49" r="2" fill="white" />
+      <!-- Robot Head -->
+      <circle cx="50" cy="49" r="20" stroke="white" stroke-width="3" fill="none" />
+      <path d="M31 43 C38 37, 62 37, 69 43" stroke="white" stroke-width="2.5" fill="none" />
+      <!-- Robot Eyes -->
+      <circle cx="42" cy="47" r="3" fill="white" />
+      <circle cx="58" cy="47" r="3" fill="white" />
+      <!-- Robot Smile -->
+      <path d="M46 53 Q50 57 54 53" stroke="white" stroke-width="2.5" fill="none" />
+      <!-- Robot Body -->
+      <path d="M36 67 C36 65, 64 65, 64 67 C64 82, 36 82, 36 67 Z" stroke="white" stroke-width="3" fill="none" />
+      <!-- Robot Arms -->
+      <path d="M31 68 C28 72, 30 79, 34 76" stroke="white" stroke-width="2.5" fill="none" />
+      <path d="M69 68 C72 72, 70 79, 66 76" stroke="white" stroke-width="2.5" fill="none" />
+    </svg>
     <div class="bot-trigger-badge" id="bot-badge"></div>
   </div>
 
   <div class="bot-window" id="spectator-bot-window">
     <div class="bot-header">
       <div class="bot-header-left">
-        <div class="bot-avatar">🤖</div>
+        <div class="bot-avatar" style="display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.1);width:26px;height:26px;border-radius:50%">
+          <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px">
+            <!-- Left Speech Bubble -->
+            <circle cx="22" cy="26" r="11" stroke="currentColor" stroke-width="2.5" fill="none" />
+            <path d="M22 37 L22 41 L26 37" stroke="currentColor" stroke-width="2.5" fill="currentColor" />
+            <circle cx="17" cy="26" r="1" fill="currentColor" />
+            <circle cx="22" cy="26" r="1" fill="currentColor" />
+            <circle cx="27" cy="26" r="1" fill="currentColor" />
+            <!-- Right Speech Bubble -->
+            <circle cx="78" cy="26" r="11" stroke="currentColor" stroke-width="2.5" fill="none" />
+            <path d="M78 37 L78 41 L74 37" stroke="currentColor" stroke-width="2.5" fill="currentColor" />
+            <rect x="73" y="21" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5" fill="none" />
+            <line x1="75.5" y1="24" x2="80.5" y2="24" stroke="currentColor" stroke-width="1.5" />
+            <line x1="75.5" y1="26" x2="80.5" y2="26" stroke="currentColor" stroke-width="1.5" />
+            <line x1="75.5" y1="28" x2="80.5" y2="28" stroke="currentColor" stroke-width="1.5" />
+            <!-- Robot Antenna -->
+            <line x1="50" y1="32" x2="50" y2="18" stroke="currentColor" stroke-width="3" />
+            <circle cx="50" cy="15" r="4" fill="currentColor" />
+            <!-- Robot Headphones/Ears -->
+            <rect x="25" y="42" width="6" height="14" rx="3" fill="currentColor" />
+            <rect x="69" y="42" width="6" height="14" rx="3" fill="currentColor" />
+            <circle cx="25" cy="49" r="2" fill="currentColor" />
+            <circle cx="75" cy="49" r="2" fill="currentColor" />
+            <!-- Robot Head -->
+            <circle cx="50" cy="49" r="20" stroke="currentColor" stroke-width="3" fill="none" />
+            <path d="M31 43 C38 37, 62 37, 69 43" stroke="currentColor" stroke-width="2.5" fill="none" />
+            <!-- Robot Eyes -->
+            <circle cx="42" cy="47" r="3" fill="currentColor" />
+            <circle cx="58" cy="47" r="3" fill="currentColor" />
+            <!-- Robot Smile -->
+            <path d="M46 53 Q50 57 54 53" stroke="currentColor" stroke-width="2.5" fill="none" />
+            <!-- Robot Body -->
+            <path d="M36 67 C36 65, 64 65, 64 67 C64 82, 36 82, 36 67 Z" stroke="currentColor" stroke-width="3" fill="none" />
+            <!-- Robot Arms -->
+            <path d="M31 68 C28 72, 30 79, 34 76" stroke="currentColor" stroke-width="2.5" fill="none" />
+            <path d="M69 68 C72 72, 70 79, 66 76" stroke="currentColor" stroke-width="2.5" fill="none" />
+          </svg>
+        </div>
         <div class="bot-title-group">
           <span class="bot-title">Spectator Bot</span>
           <span class="bot-status"><span class="bot-status-dot"></span> Online</span>
         </div>
       </div>
-      <div class="bot-close" onclick="toggleBotWindow()">✕</div>
+      <div class="bot-close" style="display:inline-flex;align-items:center" onclick="toggleBotWindow()"><svg class="icon-inline" viewBox="0 0 24 24" style="width:14px;height:14px;margin-right:0"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div>
     </div>
     
     <!-- Realtime Ticker -->
     <div class="bot-announcements-container">
       <span class="bot-announcement-tag">ANNOUNCEMENT</span>
       <div class="bot-announcement-ticker">
-        <span class="bot-announcement-msg">📢 Spectator AI: Real-time gaze and audio tracking active.</span>
-        <span class="bot-announcement-msg">⛓️ ExaChain: Consensus Node IITD-02 active and syncing Block #1,847,305.</span>
-        <span class="bot-announcement-msg">🛡️ FaceID database synced. Biometric security verified for all halls.</span>
+        <span class="bot-announcement-msg" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:4px"><path d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>Spectator AI: Real-time gaze and audio tracking active.</span>
+        <span class="bot-announcement-msg" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:4px"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>ExaChain: Consensus Node IITD-02 active and syncing Block #1,847,305.</span>
+        <span class="bot-announcement-msg" style="display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="margin-right:4px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg>FaceID database synced. Biometric security verified for all halls.</span>
       </div>
     </div>
     
@@ -6210,7 +6561,7 @@
 
     <div class="bot-input-area">
       <input type="text" class="bot-input" id="bot-input" placeholder="Type your query here..." onkeypress="handleBotKeyPress(event)">
-      <button class="bot-send" onclick="sendBotMessage()">➤</button>
+      <button class="bot-send" style="display:flex;align-items:center;justify-content:center" onclick="sendBotMessage()"><svg class="icon-inline" style="margin-right:0;width:14px;height:14px;stroke-width:2.5px" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
     </div>
   </div>
 
@@ -6307,6 +6658,31 @@
       });
     }
 
+    /* ── Sidebar collapse / expand toggle ── */
+    function toggleSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const main    = document.querySelector('.main');
+      if (!sidebar) return;
+      sidebar.classList.toggle('collapsed');
+      if (main) main.classList.toggle('sidebar-collapsed');
+      // Persist state across page reloads (optional)
+      try {
+        localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed') ? '1' : '0');
+      } catch(e) {}
+    }
+
+    /* Restore sidebar state on load */
+    (function restoreSidebarState() {
+      try {
+        if (localStorage.getItem('sidebarCollapsed') === '1') {
+          const sidebar = document.getElementById('main-sidebar');
+          const main    = document.querySelector('.main');
+          if (sidebar) { sidebar.classList.add('collapsed'); }
+          if (main)    { main.classList.add('sidebar-collapsed'); }
+        }
+      } catch(e) {}
+    })();
+
     function switchRole(role) {
       const topbar = document.querySelector('.topbar-avatar');
       const avatars = { admin: 'AS', student: 'RS', proctor: 'PK', examiner: 'EM', auditor: 'CA', recruiter: 'RV' };
@@ -6367,7 +6743,7 @@
       const card = document.getElementById('verify-result-card');
 
       if (!candidateKey) {
-        alert("❌ Hash ID or Decentralized ID not found on ExaChain ledger.\nPlease try one of our Quick Verify candidate pills.");
+        alert("Verification Error: Hash ID or Decentralized ID not found on ExaChain ledger.\nPlease try one of our Quick Verify candidate pills.");
         placeholder.style.display = 'flex';
         content.style.display = 'none';
         card.className = "verify-card";
@@ -6383,8 +6759,11 @@
       document.getElementById('verify-authority').textContent = p.authority;
 
       // Update avatar
-      const avatarText = p.name === 'Riya Singh' ? '👩‍🎓' : p.name === 'Ankit Sharma' ? '👨‍🎓' : '👩‍💻';
-      document.getElementById('verify-avatar-icon').textContent = avatarText;
+      // Return high-fidelity dynamic SVG outline avatars matching candidate types
+      const riyaSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%;height:100%"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle><path d="M12 2l7 3.5-7 3.5-7-3.5 7-3.5z" stroke="var(--purple)" fill="var(--purple)" opacity="0.3"></path></svg>`;
+      const ankitSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%;height:100%"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle><path d="M12 2l7 3.5-7 3.5-7-3.5 7-3.5z" stroke="var(--cyan)" fill="var(--cyan)" opacity="0.3"></path></svg>`;
+      const priyaSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%;height:100%"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle><path d="M12 2l7 3.5-7 3.5-7-3.5 7-3.5z" stroke="var(--teal)" fill="var(--teal)" opacity="0.3"></path></svg>`;
+      document.getElementById('verify-avatar-icon').innerHTML = p.name === 'Riya Singh' ? riyaSvg : p.name === 'Ankit Sharma' ? ankitSvg : priyaSvg;
 
       // Reset block check logs
       const logBox = document.getElementById('crypto-steps-log');
@@ -6417,42 +6796,42 @@
 
       if (p.status.includes('Active') && !p.status.includes('Reviewing')) {
         badge.className = "report-status-badge badge-success";
-        badge.textContent = "✓ Verified";
+        badge.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Verified`;
         card.className = "verify-card active-success";
 
-        didStatus.textContent = "✓ Authenticated";
+        didStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Authenticated`;
         didStatus.style.color = "var(--green)";
-        faceStatus.textContent = "✓ Matches Registrant";
+        faceStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Matches Registrant`;
         faceStatus.style.color = "var(--green)";
-        voiceStatus.textContent = "✓ Matches Registrant";
+        voiceStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Matches Registrant`;
         voiceStatus.style.color = "var(--green)";
-        anomalyStatus.textContent = "✓ 0 Flagged Anomalies";
+        anomalyStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>0 Flagged Anomalies`;
         anomalyStatus.style.color = "var(--green)";
       } else if (p.status.includes('Flagged')) {
         badge.className = "report-status-badge badge-flagged";
-        badge.textContent = "⚠️ Flagged";
+        badge.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red);width:1em;height:1em;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Flagged`;
         card.className = "verify-card active-flagged";
 
-        didStatus.textContent = "✓ Authenticated";
+        didStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Authenticated`;
         didStatus.style.color = "var(--green)";
-        faceStatus.textContent = "⚠️ Impersonation Warning";
+        faceStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red);width:1em;height:1em;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Impersonation Warning`;
         faceStatus.style.color = "var(--red)";
-        voiceStatus.textContent = "✓ Matches Registrant";
+        voiceStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Matches Registrant`;
         voiceStatus.style.color = "var(--green)";
-        anomalyStatus.textContent = "❌ Multiple Face Detected";
+        anomalyStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red);width:1em;height:1em;margin-right:4px"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>Multiple Face Detected`;
         anomalyStatus.style.color = "var(--red)";
       } else { // Reviewing state
         badge.className = "report-status-badge badge-warning";
-        badge.textContent = "🔍 Under Review";
+        badge.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--amber);width:1em;height:1em;margin-right:4px"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>Under Review`;
         card.className = "verify-card active-warning";
 
-        didStatus.textContent = "✓ Authenticated";
+        didStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Authenticated`;
         didStatus.style.color = "var(--green)";
-        faceStatus.textContent = "✓ Matches Registrant";
+        faceStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Matches Registrant`;
         faceStatus.style.color = "var(--green)";
-        voiceStatus.textContent = "✓ Matches Registrant";
+        voiceStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Matches Registrant`;
         voiceStatus.style.color = "var(--green)";
-        anomalyStatus.textContent = "⚠️ Gaze Deviation Flag";
+        anomalyStatus.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--amber);width:1em;height:1em;margin-right:4px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>Gaze Deviation Flag`;
         anomalyStatus.style.color = "var(--amber)";
       }
 
@@ -6478,7 +6857,7 @@
         statusText.style.color = "var(--amber)";
         
         qrScanTimeout = setTimeout(() => {
-          statusText.textContent = "✓ Decrypted hash: did:indy:0x7f4c10a12e32a688";
+          statusText.innerHTML = '<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Decrypted hash: did:indy:0x7f4c10a12e32a688';
           statusText.style.color = "var(--green)";
           
           qrScanTimeout = setTimeout(() => {
@@ -6510,19 +6889,19 @@
       logBox.innerHTML = '';
 
       const steps = [
-        { text: "⚡ Fetching block header for Block #1,847,295...", time: 500, style: 'loading' },
-        { text: `🔑 Retrieving Candidate Decentralized ID: ${p.did.substring(0, 20)}...`, time: 1000, style: '' },
-        { text: `⛓️ Pulling merkle root commit hash from ExaChain ledger...`, time: 1500, style: '' },
-        { text: `⚙️ Calculating local hash: SHA256(did + grade_percentile + proctor_audit_log)`, time: 2000, style: 'loading' },
-        { text: `📝 Local Hash calculated: 0x5a2f8b${p.name === 'Ankit Sharma' ? '311d' : '9d6e'}4e21a8f59...`, time: 2600, style: '' },
-        { text: `🔁 Comparing with ledger state...`, time: 3100, style: 'loading' }
+        { text: `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--cyan);width:1em;height:1em;margin-right:4px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Fetching block header for Block #1,847,295...`, time: 500, style: 'loading' },
+        { text: `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--purple);width:1em;height:1em;margin-right:4px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>Retrieving Candidate Decentralized ID: ${p.did.substring(0, 20)}...`, time: 1000, style: '' },
+        { text: `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--cyan);width:1em;height:1em;margin-right:4px"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>Pulling merkle root commit hash from ExaChain ledger...`, time: 1500, style: '' },
+        { text: `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--cyan);width:1em;height:1em;margin-right:4px"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Calculating local hash: SHA256(did + grade_percentile + proctor_audit_log)`, time: 2000, style: 'loading' },
+        { text: `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--amber);width:1em;height:1em;margin-right:4px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>Local Hash calculated: 0x5a2f8b${p.name === 'Ankit Sharma' ? '311d' : '9d6e'}4e21a8f59...`, time: 2600, style: '' },
+        { text: `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--cyan);width:1em;height:1em;margin-right:4px"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23 3 19 7 15"></path><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>Comparing with ledger state...`, time: 3100, style: 'loading' }
       ];
 
       steps.forEach(step => {
         setTimeout(() => {
           const div = document.createElement('div');
           div.className = `crypto-log-line ${step.style}`;
-          div.textContent = step.text;
+          div.innerHTML = step.text;
           logBox.appendChild(div);
           logBox.scrollTop = logBox.scrollHeight;
         }, step.time);
@@ -6535,13 +6914,13 @@
         div.style.fontWeight = 'bold';
         
         if (p.name === 'Ankit Sharma') {
-          div.textContent = "⚠️ INTEGRITY FAILED: Block hash matches ledger but flags are active. Proctor audit log indicates multiple face anomalies.";
+          div.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red);width:1.1em;height:1.1em;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>INTEGRITY FAILED: Block hash matches ledger but flags are active. Proctor audit log indicates multiple face anomalies.`;
           div.className = "crypto-log-line warning";
         } else if (p.name === 'Priya Patel') {
-          div.textContent = "🔍 PENDING VALIDATION: Block hash verified. Pending final auditor confirmation of sustained gaze anomaly.";
+          div.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--amber);width:1.1em;height:1.1em;margin-right:4px"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>PENDING VALIDATION: Block hash verified. Pending final auditor confirmation of sustained gaze anomaly.`;
           div.className = "crypto-log-line warning";
         } else {
-          div.textContent = "✓ CRYPTOGRAPHIC VERIFICATION MATCH: SHA256 hash match successful. Candidate data has NOT been modified since on-chain lock.";
+          div.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1.1em;height:1.1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>CRYPTOGRAPHIC VERIFICATION MATCH: SHA256 hash match successful. Candidate data has NOT been modified since on-chain lock.`;
         }
         
         logBox.appendChild(div);
@@ -6743,7 +7122,7 @@
       // Update topbar status
       const statusBadge = document.getElementById('exam-decrypted-status');
       if (statusBadge) {
-        statusBadge.innerHTML = `🔓 ${examId.toUpperCase()} Decrypted`;
+        statusBadge.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green)"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>${examId.toUpperCase()} Decrypted`;
         statusBadge.style.background = 'rgba(16,185,129,0.1)';
         statusBadge.style.color = 'var(--green)';
         statusBadge.style.borderColor = 'rgba(16,185,129,0.2)';
@@ -6836,13 +7215,13 @@
     }
 
     function lockExamLedger() {
-      if (confirm('🔒 Are you sure you want to LOCK the ExaChain ledger?\nAll exam-specific pages will be encrypted immediately, and active exam context will be cleared.')) {
+      if (confirm('Are you sure you want to LOCK the ExaChain ledger?\nAll exam-specific pages will be encrypted immediately, and active exam context will be cleared.')) {
         decryptedExam = null;
         
         // Reset topbar status
         const statusBadge = document.getElementById('exam-decrypted-status');
         if (statusBadge) {
-          statusBadge.innerHTML = `🔒 Ledger Encrypted`;
+          statusBadge.innerHTML = `<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red)"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Ledger Encrypted`;
           statusBadge.style.background = 'rgba(239,68,68,0.1)';
           statusBadge.style.color = 'var(--red)';
           statusBadge.style.borderColor = 'rgba(239,68,68,0.2)';
@@ -6862,14 +7241,14 @@
         if (secureBanner) secureBanner.style.display = 'none';
 
         showPage('dashboard');
-        alert('🔒 ExaChain ledger re-encrypted. All exam-specific data channels locked.');
+        alert('ExaChain ledger re-encrypted. All exam-specific data channels locked.');
       }
     }
 
     // Dynamic Database Filters
     const examsDbFilter = {
       'jee': [
-        { name: 'JEE Main Mock Test', type: 'Competitive', date: '25 May 2026', candidates: '24,532', status: '● Active', statusColor: 'var(--green)', hash: '0x7f4a...3a12', badgeClass: 'badge-competitive' }
+        { name: 'JEE Main Mock Test', type: 'Competitive', date: '25 May 2026', candidates: '24,532', status: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--green);width:1em;height:1em;margin-right:4px\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><circle cx=\"12\" cy=\"12\" r=\"3\" fill=\"currentColor\"></circle></svg>Active', statusColor: 'var(--green)', hash: '0x7f4a...3a12', badgeClass: 'badge-competitive' }
       ],
       'gate': [
         { name: 'GATE Computer Science Mock Test', type: 'Competitive', date: '28 May 2026', candidates: '15,291', status: '● Scheduled', statusColor: 'var(--purple)', hash: '0xc1a8...f031', badgeClass: 'badge-competitive' }
@@ -6881,26 +7260,26 @@
 
     const candidatesDbFilter = {
       'jee': [
-        { name: 'Riya Singh', exam: 'JEE Main', verify: '✓ Verified', did: 'did:indy:0x7f4...3a12', status: '● Active', statusColor: 'var(--green)' },
-        { name: 'Ankit Sharma', exam: 'JEE Main', verify: '✓ Verified', did: 'did:indy:0xa4f...2e88', status: '⚠ Flagged', statusColor: 'var(--amber)' }
+        { name: 'Riya Singh', exam: 'JEE Main', verify: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--green);width:1em;height:1em;margin-right:4px\"><polyline points=\"20 6 9 17 4 12\"></polyline></svg>Verified', did: 'did:indy:0x7f4...3a12', status: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--green);width:1em;height:1em;margin-right:4px\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><circle cx=\"12\" cy=\"12\" r=\"3\" fill=\"currentColor\"></circle></svg>Active', statusColor: 'var(--green)' },
+        { name: 'Ankit Sharma', exam: 'JEE Main', verify: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--green);width:1em;height:1em;margin-right:4px\"><polyline points=\"20 6 9 17 4 12\"></polyline></svg>Verified', did: 'did:indy:0xa4f...2e88', status: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--amber);width:1.1em;height:1.1em;margin-right:4px\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><line x1=\"12\" y1=\"8\" x2=\"12\" y2=\"12\"></line><line x1=\"12\" y1=\"16\" x2=\"12.01\" y2=\"16\"></line></svg>Flagged', statusColor: 'var(--amber)' }
       ],
       'gate': [
-        { name: 'Priya Patel', exam: 'GATE CS', verify: '✓ Verified', did: 'did:indy:0xc1a...f031', status: '● Active', statusColor: 'var(--green)' }
+        { name: 'Priya Patel', exam: 'GATE CS', verify: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--green);width:1em;height:1em;margin-right:4px\"><polyline points=\"20 6 9 17 4 12\"></polyline></svg>Verified', did: 'did:indy:0xc1a...f031', status: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--green);width:1em;height:1em;margin-right:4px\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><circle cx=\"12\" cy=\"12\" r=\"3\" fill=\"currentColor\"></circle></svg>Active', statusColor: 'var(--green)' }
       ],
       'upsc': [
-        { name: 'Vikram Malhotra', exam: 'UPSC GS', verify: '✓ Verified', did: 'did:indy:0x9e8...7f1a', status: '● Active', statusColor: 'var(--green)' }
+        { name: 'Vikram Malhotra', exam: 'UPSC GS', verify: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--green);width:1em;height:1em;margin-right:4px\"><polyline points=\"20 6 9 17 4 12\"></polyline></svg>Verified', did: 'did:indy:0x9e8...7f1a', status: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--green);width:1em;height:1em;margin-right:4px\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><circle cx=\"12\" cy=\"12\" r=\"3\" fill=\"currentColor\"></circle></svg>Active', statusColor: 'var(--green)' }
       ]
     };
 
     const vaultDbFilter = {
       'jee': [
-        { name: 'JEE Main Mock Test — Physics.enc', meta: 'Uploaded: 20 May 2026 · Size: 4.2 MB encrypted', hash: 'SHA-256: 0x7f4a2b9e1d5c8f30a6be4d21f9c7e3a12...', icon: '🔒', iconBg: 'rgba(99,102,241,0.1)', status: '🔒 LOCKED', statusColor: 'var(--amber)', release: 'Unlocks: 25 May 09:00 AM' }
+        { name: 'JEE Main Mock Test — Physics.enc', meta: 'Uploaded: 20 May 2026 · Size: 4.2 MB encrypted', hash: 'SHA-256: 0x7f4a2b9e1d5c8f30a6be4d21f9c7e3a12...', icon: '<svg class=\"icon-large\" style=\"width:20px;height:20px;stroke:currentColor;fill:none\" viewBox=\"0 0 24 24\"><rect x=\"3\" y=\"11\" width=\"18\" height=\"11\" rx=\"2\" ry=\"2\"></rect><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"></path></svg>', iconBg: 'rgba(99,102,241,0.1)', status: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--amber);width:1.1em;height:1.1em;margin-right:4px\"><rect x=\"3\" y=\"11\" width=\"18\" height=\"11\" rx=\"2\" ry=\"2\"></rect><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"></path></svg>LOCKED', statusColor: 'var(--amber)', release: 'Unlocks: 25 May 09:00 AM' }
       ],
       'gate': [
-        { name: 'GATE Computer Science — CS.enc', meta: 'Uploaded: 22 May 2026 · Size: 3.8 MB encrypted', hash: 'SHA-256: 0xc1a8b9f0d482a991e2b77d44c5d9e3b4...', icon: '🔒', iconBg: 'rgba(99,102,241,0.1)', status: '🔒 LOCKED', statusColor: 'var(--amber)', release: 'Unlocks: 28 May 02:00 PM' }
+        { name: 'GATE Computer Science — CS.enc', meta: 'Uploaded: 22 May 2026 · Size: 3.8 MB encrypted', hash: 'SHA-256: 0xc1a8b9f0d482a991e2b77d44c5d9e3b4...', icon: '<svg class=\"icon-large\" style=\"width:20px;height:20px;stroke:currentColor;fill:none\" viewBox=\"0 0 24 24\"><rect x=\"3\" y=\"11\" width=\"18\" height=\"11\" rx=\"2\" ry=\"2\"></rect><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"></path></svg>', iconBg: 'rgba(99,102,241,0.1)', status: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--amber);width:1.1em;height:1.1em;margin-right:4px\"><rect x=\"3\" y=\"11\" width=\"18\" height=\"11\" rx=\"2\" ry=\"2\"></rect><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"></path></svg>LOCKED', statusColor: 'var(--amber)', release: 'Unlocks: 28 May 02:00 PM' }
       ],
       'upsc': [
-        { name: 'UPSC Prelims Paper 1 — GS.enc', meta: 'Uploaded: 24 May 2026 · Size: 5.1 MB encrypted', hash: 'SHA-256: 0x9e8f7a1b3c4d5e6f7a8b9c0d1e2f3a4b...', icon: '🔒', iconBg: 'rgba(99,102,241,0.1)', status: '🔒 LOCKED', statusColor: 'var(--amber)', release: 'Unlocks: 30 May 09:30 AM' }
+        { name: 'UPSC Prelims Paper 1 — GS.enc', meta: 'Uploaded: 24 May 2026 · Size: 5.1 MB encrypted', hash: 'SHA-256: 0x9e8f7a1b3c4d5e6f7a8b9c0d1e2f3a4b...', icon: '<svg class=\"icon-large\" style=\"width:20px;height:20px;stroke:currentColor;fill:none\" viewBox=\"0 0 24 24\"><rect x=\"3\" y=\"11\" width=\"18\" height=\"11\" rx=\"2\" ry=\"2\"></rect><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"></path></svg>', iconBg: 'rgba(99,102,241,0.1)', status: '<svg class=\"icon-inline\" viewBox=\"0 0 24 24\" style=\"color:var(--amber);width:1.1em;height:1.1em;margin-right:4px\"><rect x=\"3\" y=\"11\" width=\"18\" height=\"11\" rx=\"2\" ry=\"2\"></rect><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"></path></svg>LOCKED', statusColor: 'var(--amber)', release: 'Unlocks: 30 May 09:30 AM' }
       ]
     };
 
@@ -6948,7 +7327,7 @@
             if (role === 'student') {
               launchExamPortal(examId);
             } else {
-              alert(`🔓 ExaChain Decryption Share Verified via Smart Contract.\nExamination payload for '${examId.toUpperCase()}' successfully decrypted for role '${role.toUpperCase()}'.\nAll exam-specific tabs are now unlocked and filtered.`);
+              alert(`ExaChain Decryption Share Verified via Smart Contract.\nExamination payload for '${examId.toUpperCase()}' successfully decrypted for role '${role.toUpperCase()}'.\nAll exam-specific tabs are now unlocked and filtered.`);
               showPage('dashboard');
             }
           }, 800);
@@ -7024,7 +7403,7 @@
       toast.style.zIndex = '4000';
       toast.style.fontFamily = 'Space Grotesk, sans-serif';
       toast.style.boxShadow = '0 0 15px rgba(6, 182, 212, 0.3)';
-      toast.textContent = "⛓ Blockchain Node: " + msg;
+      toast.innerHTML = `<span style="display:inline-flex;align-items:center;gap:6px"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--cyan);width:1.2em;height:1.2em;margin-right:0"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>Blockchain Node: ${msg}</span>`;
       document.body.appendChild(toast);
       setTimeout(() => toast.remove(), 3000);
     }
@@ -7593,13 +7972,13 @@
 
         const newAuditItem = `
           <div class="audit-item">
-            <div class="audit-icon" style="background:rgba(16,185,129,0.1)">📤</div>
+            <div class="audit-icon" style="background:rgba(16,185,129,0.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg></div>
             <div class="audit-body">
               <div class="audit-action">Final submission sealed — Riya Singh · ${currentExam.toUpperCase()} Mock Test</div>
               <div class="audit-detail">Exam ID: EX-2026-${Math.floor(1000 + Math.random()*9000)} · Score achieved: ${scoreStr} · Status: Sealed</div>
               <div class="audit-hash">${hash} · Block #${blockNum}</div>
             </div>
-            <div class="audit-time">${timeStr}<br><span style="color:var(--green)">✓ Confirmed</span></div>
+            <div class="audit-time">${timeStr}<br><span style="color:var(--green)">display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Confirmed</span></div>
           </div>
         `;
         auditContainer.insertAdjacentHTML('afterbegin', newAuditItem);
@@ -7613,7 +7992,7 @@
       const topPerformerElement = document.querySelector('#page-results .card-body div[style*="border-top"] div:first-child font');
       // If we have a list of entries or a summary, update it
       // Let's create a beautiful custom alert/toast
-      alert(`🎉 Exam submitted successfully!\n\nCandidate: Riya Singh\nExam: ${currentExam.toUpperCase()} Mock Test\nResult permanently anchored on Blockchain ledger.\n\nScore: ${currentExam === 'jee' ? score + '/360' : currentExam === 'gate' ? score + '/100' : score + '/200'}\n\nRedirecting to Results dashboard.`);
+      alert(`Exam submitted successfully!\n\nCandidate: Riya Singh\nExam: ${currentExam.toUpperCase()} Mock Test\nResult permanently anchored on Blockchain ledger.\n\nScore: ${currentExam === 'jee' ? score + '/360' : currentExam === 'gate' ? score + '/100' : score + '/200'}\n\nRedirecting to Results dashboard.`);
 
       forceExitSandbox();
       showPage('results');
@@ -7742,11 +8121,11 @@
 
     // Live Alert Actions
     function escalateAlert(name) {
-      alert(`🚨 Escalating security anomaly for ${name} to high-severity compliance record on ExaChain.\nThis will sync with NTA / UPSC central authorities dashboards immediately.`);
+      alert(`Escalating security anomaly for ${name} to high-severity compliance record on ExaChain.\nThis will sync with NTA / UPSC central authorities dashboards immediately.`);
     }
 
     function reviewAlert(name) {
-      alert(`🔍 Opening biometric camera archives and GPS logs for ${name} for detailed invigilator verification.`);
+      alert(`Opening biometric camera archives and GPS logs for ${name} for detailed invigilator verification.`);
     }
 
     function dismissAlert(btn) {
@@ -7756,7 +8135,7 @@
     }
 
     function evictCandidate(name, rowId) {
-      if (confirm(`⚠️ WARNING: Are you sure you want to EVICT candidate ${name}?\n\nThis will instantly terminate their active exam session, revoke their DID exam ticket on the ExaChain ledger, and log this cheating incident across the Institute and Examiner panels.`)) {
+      if (confirm(`WARNING: Are you sure you want to EVICT candidate ${name}?\n\nThis will instantly terminate their active exam session, revoke their DID exam ticket on the ExaChain ledger, and log this cheating incident across the Institute and Examiner panels.`)) {
         // Suspend logic
         const row = document.getElementById(rowId);
         if (row) {
@@ -7764,7 +8143,7 @@
           const btn = row.querySelector('button');
           if (btn) {
             btn.disabled = true;
-            btn.textContent = '❌ Evicted & Suspended';
+            btn.innerHTML = '<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red);width:1em;height:1em;margin-right:4px"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>Evicted & Suspended';
           }
         }
         // Increment suspended count
@@ -7775,7 +8154,7 @@
         }
         // Update DB
         if (candidatesDb[name]) {
-          candidatesDb[name].status = '🚫 Evicted / Suspended on-chain';
+          candidatesDb[name].status = '<svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red);width:1em;height:1em;margin-right:4px"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>Evicted / Suspended on-chain';
           candidatesDb[name].statusColor = 'var(--red)';
           candidatesDb[name].logs.push({
             time: '12:45:10 PM',
@@ -7784,7 +8163,7 @@
             style: 'color:var(--red); font-weight:bold'
           });
         }
-        alert(`🚫 Candidate ${name} evicted. DID credential suspended on ExaChain node Node-IITD-02.`);
+        alert(`Candidate ${name} evicted. DID credential suspended on ExaChain node Node-IITD-02.`);
       }
     }
 
@@ -7937,9 +8316,9 @@
 
       if (q.includes('consequence') || q.includes('caught') || q.includes('cheat') || q.includes('dishonesty') || q.includes('fraud') || q.includes('impersonation') || q.includes('punish')) {
         return `<strong>Consequences of Cheating &amp; Impersonation:</strong><br><br>
-                🚨 <strong>Real-time Broadcast</strong>: Spectator AI instantly routes cheating alerts (webcam gaze off-screen, audio whisper, secondary face, or GPS mismatch) to the live Proctor Dashboard, Institute Panel, Examiner Panel, and Exam Authority.<br>
-                🚫 <strong>DID Credential Revocation</strong>: The conducting authority or institute admin can immediately evict the candidate, terminating their session and invalidating their digital exam ticket on-chain.<br>
-                🔗 <strong>Permanent Blacklisting</strong>: The eviction is recorded immutably on ExaChain, which syncs with all participating boards and universities, preventing the candidate from registering for other exams.`;
+                <svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red);width:1.2em;height:1.2em;margin-right:6px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><strong>Real-time Broadcast</strong>: Spectator AI instantly routes cheating alerts (webcam gaze off-screen, audio whisper, secondary face, or GPS mismatch) to the live Proctor Dashboard, Institute Panel, Examiner Panel, and Exam Authority.<br>
+                <svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--red);width:1.2em;height:1.2em;margin-right:6px"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg><strong>DID Credential Revocation</strong>: The conducting authority or institute admin can immediately evict the candidate, terminating their session and invalidating their digital exam ticket on-chain.<br>
+                <svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--cyan);width:1.2em;height:1.2em;margin-right:6px"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg><strong>Permanent Blacklisting</strong>: The eviction is recorded immutably on ExaChain, which syncs with all participating boards and universities, preventing the candidate from registering for other exams.`;
       }
 
       if (q.includes('apply') || q.includes('how to apply') || q.includes('nta') || q.includes('jee') || q.includes('upsc') || q.includes('gate') || q.includes('website') || q.includes('conducting')) {
@@ -7968,27 +8347,27 @@
     <div class="profile-card">
       <div class="profile-header">
         <div style="font-size:1.1rem;font-weight:bold" id="prof-modal-title">Candidate Profile &amp; Registration Form</div>
-        <button class="btn-outline" style="padding:6px 12px;font-size:0.75rem;cursor:pointer" onclick="closeCandidateProfile()">✕ Close</button>
+        <button class="btn-outline" style="padding:6px 12px;font-size:0.75rem;cursor:pointer;display:inline-flex;align-items:center" onclick="closeCandidateProfile()"><svg class="icon-inline" viewBox="0 0 24 24" style="width:12px;height:12px;margin-right:4px"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Close</button>
       </div>
       <div class="profile-body">
         <div class="profile-grid-layout">
           <!-- Photo and Biometrics Enrolment -->
           <div class="profile-photo-panel">
-            <div class="profile-avatar-circle" id="prof-avatar">👤</div>
+            <div class="profile-avatar-circle" id="prof-avatar"><svg style="width: 50%; height: 50%; stroke: var(--text3); stroke-width: 1.5px; fill: none;" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
             <h3 id="prof-name" style="margin:5px 0">Riya Singh</h3>
             <p id="prof-exam-badge" style="background:var(--primary);color:white;font-size:0.7rem;padding:2px 8px;border-radius:10px;margin-bottom:15px">JEE Main</p>
             
             <div class="profile-bio-item">
               <span>FaceID Enrolled</span>
-              <span style="color:var(--green)">✓ Yes</span>
+              <span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Yes</span>
             </div>
             <div class="profile-bio-item">
               <span>VoiceID Enrolled</span>
-              <span style="color:var(--green)">✓ Yes</span>
+              <span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Yes</span>
             </div>
             <div class="profile-bio-item">
               <span>GPS Tracking</span>
-              <span style="color:var(--green)">✓ Active</span>
+              <span style="color:var(--green);display:inline-flex;align-items:center"><svg class="icon-inline" viewBox="0 0 24 24" style="color:var(--green);width:1em;height:1em;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg>Active</span>
             </div>
             <div class="profile-bio-item">
               <span>Status</span>
